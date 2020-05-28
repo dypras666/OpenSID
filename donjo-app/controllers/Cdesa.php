@@ -45,10 +45,10 @@ class Cdesa extends Admin_Controller {
 		$_SESSION['per_page'] = $_POST['per_page'] ?: null;
 		$data['per_page'] = $_SESSION['per_page'];
 
-		$data['paging']  = $this->cdesa_model->paging_c_desa($kat, $mana, $page);
+		$data['paging']  = $this->cdesa_model->paging_c_desa($page);
 		$data['keyword'] = $this->data_persil_model->autocomplete();
 		$data["desa"] = $this->config_model->get_data();
-		$data["cdesa"] = $this->cdesa_model->list_c_desa($kat, $mana, $data['paging']->offset, $data['paging']->per_page);
+		$data["cdesa"] = $this->cdesa_model->list_c_desa($data['paging']->offset, $data['paging']->per_page);
 		$data["persil_peruntukan"] = $this->data_persil_model->list_persil_peruntukan();
 		$data["persil_jenis"] = $this->data_persil_model->list_persil_jenis();
 		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();

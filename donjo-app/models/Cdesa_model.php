@@ -54,7 +54,7 @@ class Cdesa_model extends CI_Model {
 		$this->search_sql();
 	}
 
-	public function paging_c_desa($kat='', $mana=0, $p=1)
+	public function paging_c_desa($p=1)
 	{
 		$this->main_sql_c_desa();
 		$jml_data = $this->db
@@ -72,12 +72,12 @@ class Cdesa_model extends CI_Model {
 		return $this->paging;
 	}
 
-	public function list_c_desa($kat='', $mana=0, $offset, $per_page)
+	public function list_c_desa($offset, $per_page)
 	{
 		$data = [];
 		$this->main_sql_c_desa();
 		$this->db
-			->select('c.*, c.created_at as tanggal_daftar, m.id_cdesa_masuk, cu.id_pend')
+			->select('c.*, c.id as id_cdesa, c.created_at as tanggal_daftar, m.id_cdesa_masuk, cu.id_pend')
 			->select('u.nik AS nik, u.nama as namapemilik, w.*')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
@@ -92,11 +92,6 @@ class Cdesa_model extends CI_Model {
 		for ($i=0; $i<count($data); $i++)
 		{
 			$data[$i]['no'] = $j + 1;
-			if (($data[$i]['jenis_pemilik']) == 2)
-			{
-				$data[$i]['namapemilik'] = $data[$i]['nama_pemilik_luar'];
-				$data[$i]['nik'] = "-";
-			}
 			$j++;
 		}
 
@@ -229,7 +224,8 @@ class Cdesa_model extends CI_Model {
 	public function get_pemilik($id_cdesa)
 	{
 		$this->db->select('p.id, p.nik, p.nama, k.no_kk, w.rt, w.rw, w.dusun')
-			->select('CONCAT("RT ", rt, " / RW ", rw, " - ", dusun) as alamat')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN p.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
 			->from('cdesa c')
 			->join('cdesa_penduduk cp', 'c.id = cp.id_cdesa', 'left')
 			->join('tweb_penduduk p', 'p.id = cp.id_pend', 'left')
@@ -237,6 +233,7 @@ class Cdesa_model extends CI_Model {
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_cluster', 'left')
 			->where('c.id', $id_cdesa);
 		$data = $this->db->get()->row_array();
+
 		return $data;
 	}
 

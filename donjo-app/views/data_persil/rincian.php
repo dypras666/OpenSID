@@ -63,7 +63,7 @@
 													<tbody>
 														<tr>
 															<td nowrap>Nama Pemilik</td>
-															<td> : <?= $pemilik["nama"]?></td>
+															<td> : <?= $pemilik["namapemilik"]?></td>
 														</tr>
 														<tr>
 															<td nowrap>NIK</td>
