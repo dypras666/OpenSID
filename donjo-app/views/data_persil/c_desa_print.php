@@ -26,7 +26,6 @@
 				<div class="header" align="center">
 					<label align="left"><?= get_identitas()?></label>
 					<h3> DATA C-DESA </h3>
-					<h3> <?= $_SESSION['judul_statistik']; ?></h3>
 				</div>
 				<br>
 				<table class="border thick">
@@ -54,24 +53,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($data_persil as $persil): ?>
+						<?php foreach ($data_cdesa as $cdesa): ?>
 						<tr>
-							<td><?= $persil['no']?></td>
-							<td class="textx"><?= sprintf("%04s", $persil['c_desa'])?></td>
-							<?php if ($persil['jenis_pemilik'] != '2'): ?>
-								<td><?= $persil['namapemilik']?></td>
-								<td class="textx"><?= $persil['nik']?></td>
-								<td>RT: <?= $persil["rt"]?> RW: <?= $persil["rw"]?> Dusun <?= strtoupper($persil["dusun"])?></td>
-							<?php else : ?>
-								<td><?= strtoupper($persil["namapemilik"])?></td>
-								<td>-</td>
-								<td><?= $persil["alamat_luar"]?></td>
-							<?php endif; ?>
-							<td> <?= luas($persil['basah'], "ha") ?></td>
-							<td> <?= luas($persil['basah'], "meter") ?></td>
-							<td> <?= luas($persil['kering'], "ha") ?></td>
-							<td> <?= luas($persil['kering'], "meter") ?></td>
-							<td><?= tgl_indo($persil['tanggal_daftar'])?></td>
+							<td><?= $cdesa['no']?></td>
+							<td class="textx"><?= sprintf("%04s", $cdesa['nomor'])?></td>
+							<td><?= strtoupper($cdesa["namapemilik"])?></td>
+							<td class="textx"><?= $cdesa['nik']?></td>
+							<td><?= $cdesa["alamat"]?></td>
+							<td> <?= luas($cdesa['basah'], "ha") ?></td>
+							<td> <?= luas($cdesa['basah'], "meter") ?></td>
+							<td> <?= luas($cdesa['kering'], "ha") ?></td>
+							<td> <?= luas($cdesa['kering'], "meter") ?></td>
+							<td><?= tgl_indo($cdesa['tanggal_daftar'])?></td>
 						</tr>
 						<?php endforeach; ?>
 					</tbody>

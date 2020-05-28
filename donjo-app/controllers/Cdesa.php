@@ -93,13 +93,13 @@ class Cdesa extends Admin_Controller {
 		$data["mode"] = $mode;
 		$data["penduduk"] = $this->data_persil_model->list_penduduk();
 		if ($mode === 'edit')
-		{ 
+		{
 			$data['cdesa'] = $this->cdesa_model->get_cdesa($id);
 			$this->ubah_pemilik($id, $data, $post);
 		}
 		else
 		{
-			switch ($post['jenis_pemilik']) 
+			switch ($post['jenis_pemilik'])
 			{
 				case '1':
 					# Pemilik desa
@@ -125,13 +125,13 @@ class Cdesa extends Admin_Controller {
 	{
 		$jenis_pemilik_baru = $post['jenis_pemilik'] ?: 0;
 
-		switch ($jenis_pemilik_baru) 
+		switch ($jenis_pemilik_baru)
 		{
 			case '0':
 				// Buka form ubah pertama kali
 				if ($data['cdesa']['jenis_pemilik'] == 1)
 				{
-					$data['pemilik'] = $this->cdesa_model->get_pemilik($id);					
+					$data['pemilik'] = $this->cdesa_model->get_pemilik($id);
 				}
 				break;
 			case '1':
@@ -173,7 +173,7 @@ class Cdesa extends Admin_Controller {
 			$_SESSION["error_msg"] = trim(strip_tags(validation_errors()));
 			$jenis_pemilik = $this->input->post('jenis_pemilik');
 			$id	= $this->input->post('id');
-			if ($jenis_pemilik == 1) 
+			if ($jenis_pemilik == 1)
 			{
 				if ($id)
 					redirect("cdesa/create/edit/".$id);
@@ -200,7 +200,7 @@ class Cdesa extends Admin_Controller {
 		$header['minsidebar'] = 1;
 
 		if ($id_bidang)
-		{ 
+		{
 			$data["persil"] = $this->cdesa_model->get_persil($id_bidang);
 			$data["bidang"] = $this->cdesa_model->get_bidang($id_bidang);
 		}
@@ -291,7 +291,7 @@ class Cdesa extends Admin_Controller {
 
 	public function cetak($o=0)
 	{
-		$data['data_persil'] = $this->data_persil_model->list_c_desa('', $o, 0, 10000);
+		$data['data_cdesa'] = $this->cdesa_model->list_c_desa('', $o, 0, 10000);
 		$this->load->view('data_persil/c_desa_print', $data);
 	}
 

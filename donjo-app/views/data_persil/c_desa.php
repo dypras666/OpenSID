@@ -41,7 +41,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-										<a href="" class="btn btn-social btn-flat bg-purple btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" target="_blank">
+										<a href='<?= site_url("cdesa/cetak")?>' class="btn btn-social btn-flat bg-purple btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" target="_blank">
 											<i class="fa fa-print"></i>Cetak
 										</a>
 										<a href="" class="btn btn-social btn-flat bg-navy btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Unduh Data" target="_blank">
@@ -88,7 +88,7 @@
 																		</td>
 																		<td><?= sprintf("%04s", $item["nomor"]) ?></td>
 																		<td><?= $item['nama_kepemilikan'] ?>
-																		<td><?= $item["namapemilik"] ?></td>
+																		<td><?= strtoupper($item["namapemilik"]) ?></td>
 																		<td><a href='<?= site_url("penduduk/detail/1/0/$item[id_pend]")?>'><?= $item["nik"] ?></a></td>
 																		<td><?= $item["jumlah"] ?></td>
 																	</tr>

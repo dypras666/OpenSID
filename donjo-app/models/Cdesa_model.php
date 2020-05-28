@@ -33,33 +33,35 @@ class Cdesa_model extends CI_Model {
 	{
 		if (isset($_SESSION['cari']))
 		{
-			$cari = $_SESSION['cari'];
-			$kw = $this->db->escape_like_str($cari);
-			$kw = '%' .$kw. '%';
-			$sql= " AND (u.nama LIKE '$kw' OR c.nama_pemilik_luar like '$kw' OR c.nama_kepemilikan like '$kw' OR c.nomor LIKE '$kw')";
-			return $sql;
+			$cari = $this->session->cari;
+			$cari = $this->db->escape_like_str($cari);
+			$this->db
+				->like('u.nama', $cari)
+				->or_like('c.nama_pemilik_luar', $cari)
+				->or_like('c.nama_kepemilikan', $cari)
+				->or_like('c.nomor', $cari);
 			}
 		}
 
 	private function main_sql_c_desa()
 	{
-		$sql = " FROM cdesa c
-				LEFT JOIN mutasi_cdesa m ON m.id_cdesa_masuk = c.id
-				LEFT JOIN persil p ON p.id = m.id_persil
-				LEFT JOIN cdesa_penduduk cu ON cu.id_cdesa = c.id
-				LEFT JOIN tweb_penduduk u ON u.id = cu.id_pend
-				WHERE 1  ";
-		$sql .= $this->search_sql();
-		return $sql;
+		$this->db->from('cdesa c')
+			->join('mutasi_cdesa m', 'm.id_cdesa_masuk = c.id', 'left')
+			->join('persil p', 'p.id = m.id_persil', 'left')
+			->join('cdesa_penduduk cu', 'cu.id_cdesa = c.id', 'left')
+			->join('tweb_penduduk u', 'u.id = cu.id_pend', 'left')
+			->join('tweb_wil_clusterdesa w', 'w.id = u.id_cluster', 'left');
+		$this->search_sql();
 	}
 
 	public function paging_c_desa($kat='', $mana=0, $p=1)
 	{
-
-		$sql = "SELECT COUNT(*) AS jml ".$this->main_sql_c_desa();
-		$query = $this->db->query($sql);
-		$row = $query->row_array();
-		$jml_data = $row['jml'];
+		$this->main_sql_c_desa();
+		$jml_data = $this->db
+			->select('COUNT(c.id) AS jml')
+			->get()
+			->row()
+			->jml;
 
 		$this->load->library('paging');
 		$cfg['page'] = $p;
@@ -73,13 +75,18 @@ class Cdesa_model extends CI_Model {
 	public function list_c_desa($kat='', $mana=0, $offset, $per_page)
 	{
 		$data = [];
-		$sql = "SELECT c.id, c.*, m.id_cdesa_masuk, u.nik AS nik, cu.id_pend, COUNT(m.id_cdesa_masuk) AS jumlah, u.nama as namapemilik, c.created_at as tanggal_daftar
-		";
-		$sql .= $this->main_sql_c_desa();
-		$sql .= " GROUP BY c.id, cu.id";
-		$sql .= " LIMIT ".$offset.",".$per_page;
-		$query = $this->db->query($sql);
-		$data = $query->result_array();
+		$this->main_sql_c_desa();
+		$this->db
+			->select('c.*, c.created_at as tanggal_daftar, m.id_cdesa_masuk, cu.id_pend')
+			->select('u.nik AS nik, u.nama as namapemilik, w.*')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
+			->select('COUNT(m.id_cdesa_masuk) AS jumlah')
+			->group_by('c.id, cu.id')
+			->limit($per_page, $offset);
+		$data = $this->db
+			->get()
+			->result_array();
 
 		$j = $offset;
 		for ($i=0; $i<count($data); $i++)
