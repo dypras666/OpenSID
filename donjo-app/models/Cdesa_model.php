@@ -47,7 +47,7 @@ class Cdesa_model extends CI_Model {
 				LEFT JOIN mutasi_cdesa m ON m.id_cdesa_masuk = c.id
 				LEFT JOIN persil p ON p.id = m.id_persil
 				LEFT JOIN cdesa_penduduk cu ON cu.id_cdesa = c.id
-				JOIN tweb_penduduk u ON u.id = cu.id_pend
+				LEFT JOIN tweb_penduduk u ON u.id = cu.id_pend
 				WHERE 1  ";
 		$sql .= $this->search_sql();
 		return $sql;
@@ -73,10 +73,10 @@ class Cdesa_model extends CI_Model {
 	public function list_c_desa($kat='', $mana=0, $offset, $per_page)
 	{
 		$data = [];
-		$sql = "SELECT c.id, c.*, m.id_cdesa_masuk, u.nik AS nik,  COUNT(m.id_cdesa_masuk) AS jumlah, u.nama as namapemilik, c.created_at as tanggal_daftar
+		$sql = "SELECT c.id, c.*, m.id_cdesa_masuk, u.nik AS nik, cu.id_pend, COUNT(m.id_cdesa_masuk) AS jumlah, u.nama as namapemilik, c.created_at as tanggal_daftar
 		";
 		$sql .= $this->main_sql_c_desa();
-		$sql .= " GROUP BY c.id, u.id";
+		$sql .= " GROUP BY c.id, cu.id";
 		$sql .= " LIMIT ".$offset.",".$per_page;
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
