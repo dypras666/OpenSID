@@ -42,7 +42,7 @@ class Data_persil_model extends CI_Model {
 	public function paging($p=1)
 	{
 		$this->main_sql();
-		$jml = $this->db->get()->num_rows();
+		$jml = $this->db->select('p.id')->get()->num_rows();
 
 		$this->load->library('paging');
 		$cfg['page'] = $p;
@@ -56,20 +56,28 @@ class Data_persil_model extends CI_Model {
 	private function main_sql()
 	{
 		$this->db->from('persil p')
-			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
-			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
+			->join('ref_persil_kelas k', 'k.id = p.kelas')
+			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah')
 			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
-			->group_by('p.nomor, m.id');
+			->group_by('p.nomor');
 		$this->search_sql();
 	}
 
 	public function list_data($offset, $per_page)
 	{
 		$this->main_sql();
-		$data = $this->db->select('p.*, k.kode, count(m.id) as jml_bidang')
+		$data = $this->db->select('p.*, k.kode, count(m.id_persil) as jml_bidang')
 			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
 			->get()
 			->result_array();
+
+		$j = $offset;
+		for ($i=0; $i<count($data); $i++)
+		{
+			$data[$i]['no'] = $j + 1;
+			$j++;
+		}
+
 		return $data;
 	}
 
