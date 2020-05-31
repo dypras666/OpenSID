@@ -46,6 +46,9 @@
 							<i class="fa fa-plus"></i>Tambah Bidang Persil
 						</a>
 						<a href="<?=site_url('cdesa')?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Daftar C-DESA</a>
+						<a href="<?= site_url("cdesa/form_c_desa/".$c_desa_detail['id'])?>" class="btn btn-social btn-flat bg-purple btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" target="_blank">
+							<i class="fa fa-print"></i>Cetak C-DESA
+						</a>
 					</div>
 					<div class="box-body">
 						<div class="row">

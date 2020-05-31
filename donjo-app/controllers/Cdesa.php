@@ -292,18 +292,24 @@ class Cdesa extends Admin_Controller {
 	public function cetak($o=0)
 	{
 		$data['data_cdesa'] = $this->cdesa_model->list_c_desa('', $o, 0, 10000);
-		$this->load->view('data_persil/c_desa_print', $data);
+		$this->load->view('data_persil/c_desa_cetak', $data);
 	}
 
-	public function excel($mode="", $o=0)
+	public function unduh($o=0)
 	{
-		$data['mode'] = $mode;
-		if($mode == 'persil')
-			$data['data_persil'] = $this->data_persil_model->list_persil('', $o, 0, 10000);
-		else
-			$data['data_persil'] = $this->data_persil_model->list_c_desa('', $o, 0, 10000);
-			$data["persil_jenis"] = $this->data_persil_model->list_persil_jenis();
-		$this->load->view('data_persil/persil_excel', $data);
+		$data['data_cdesa'] = $this->cdesa_model->list_c_desa('', $o, 0, 10000);
+		$this->load->view('data_persil/c_desa_unduh', $data);
+	}
+
+	public function form_c_desa($id=0)
+	{
+		$header = $this->header_model->get_data();
+		$data['desa'] = $header['desa'];
+		$data["persil_detail"] = $this->data_persil_model->get_c_desa($id);
+		$data['basah']= $this->data_persil_model->get_c_cetak($id, 'S');
+		$data['kering']= $this->data_persil_model->get_c_cetak($id, 'D');
+		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
+		$this->load->view('data_persil/c_desa_form_print', $data);
 	}
 
 }

@@ -167,7 +167,7 @@
 													<div class="col-sm-4">
 														<input name="no_bidang_persil" type="text" class="form-control input-sm digits required" placeholder="Nomor Bidang Persil" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
 													</div>
-												</div>												
+												</div>
 												<div class="form-group">
 													<label for="sid" class="col-sm-3 control-label">Peruntukan</label>
 													<div class="col-sm-4">
@@ -201,7 +201,7 @@
 											</h4>
 										</div>
 										<div id="mutasi" class="panel-collapse">
-											<div class="box-body">										
+											<div class="box-body">
 												<div class="form-group">
 													<label for="perubahan" class="col-sm-3 control-label">Sebab Dan Tanggal Perubahan</label>
 													<div class="col-sm-8">
@@ -230,7 +230,7 @@
 														<div class="form-group">
 															<label for="luas" class="col-sm-3 control-label">Luas Mutasi (M2)</label>
 															<div class="col-sm-9">
-																<input name="luas" type="text" class="form-control input-sm luas" placeholder="Luas Mutasi (M2)" value="<?= $bidang['luas']?>">
+																<input name="luas" type="text" class="form-control input-sm luas required" placeholder="Luas Mutasi (M2)" value="<?= $bidang['luas']?>">
 															</div>
 														</div>
 														<div class="form-group">
@@ -295,7 +295,7 @@
 	}
 
 	$(document).ready(function(){
-		$('#tipe').change(function(){ 
+		$('#tipe').change(function(){
 			var id=$(this).val();
 			$.ajax({
 				url : "<?=site_url('data_persil/kelasid')?>",

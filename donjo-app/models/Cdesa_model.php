@@ -48,6 +48,7 @@ class Cdesa_model extends CI_Model {
 		$this->db->from('cdesa c')
 			->join('mutasi_cdesa m', 'm.id_cdesa_masuk = c.id', 'left')
 			->join('persil p', 'p.id = m.id_persil', 'left')
+			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
 			->join('cdesa_penduduk cu', 'cu.id_cdesa = c.id', 'left')
 			->join('tweb_penduduk u', 'u.id = cu.id_pend', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = u.id_cluster', 'left');
@@ -82,6 +83,8 @@ class Cdesa_model extends CI_Model {
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
 			->select('COUNT(m.id_cdesa_masuk) AS jumlah')
+			->select("SUM(CASE WHEN k.tipe = 'BASAH' THEN m.luas ELSE 0 END) as basah")
+			->select("SUM(CASE WHEN k.tipe = 'KERING' THEN m.luas ELSE 0 END) as kering")
 			->group_by('c.id, cu.id')
 			->limit($per_page, $offset);
 		$data = $this->db
