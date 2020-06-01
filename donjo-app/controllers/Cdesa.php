@@ -303,12 +303,10 @@ class Cdesa extends Admin_Controller {
 
 	public function form_c_desa($id=0)
 	{
-		$header = $this->header_model->get_data();
-		$data['desa'] = $header['desa'];
-		$data["persil_detail"] = $this->data_persil_model->get_c_desa($id);
-		$data['basah']= $this->data_persil_model->get_c_cetak($id, 'S');
-		$data['kering']= $this->data_persil_model->get_c_cetak($id, 'D');
-		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
+		$data['desa'] = $this->config_model->get_data();
+		$data['cdesa'] = $this->cdesa_model->get_cdesa($id);
+		$data['basah'] = $this->cdesa_model->get_cetak_bidang($id, 'BASAH');
+		$data['kering'] = $this->cdesa_model->get_cetak_bidang($id, 'KERING');
 		$this->load->view('data_persil/c_desa_form_print', $data);
 	}
 

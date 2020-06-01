@@ -125,9 +125,18 @@ class Cdesa_model extends CI_Model {
 
 	public function get_cdesa($id)
 	{
-		$data = $this->db->where('id', $id)
-			->get('cdesa')
+		$data = $this->db->where('c.id', $id)
+			->select('c.*')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
+			->from('cdesa c')
+			->join('cdesa_penduduk cu', 'cu.id_cdesa = c.id', 'left')
+			->join('tweb_penduduk u', 'u.id = cu.id_pend', 'left')
+			->join('tweb_wil_clusterdesa w', 'w.id = u.id_cluster', 'left')
+			->limit(1)
+			->get()
 			->row_array();
+
 		return $data;
 	}
 
@@ -303,41 +312,40 @@ class Cdesa_model extends CI_Model {
 		status_sukses($outp); //Tampilkan Pesan
 	}
 
-	public function get_c_cetak($id, $tipe='')
+	public function get_cetak_bidang($id_cdesa, $tipe='')
 	{
-		$data = false;
-		$strSQL = "SELECT p.`id` as id, u.`nik` as nik, y.`c_desa`, p.`jenis_pemilik` as jenis_pemilik, p.`nama` as nopersil, p.id_pend, p.`id_c_desa`, p.`persil_jenis_id`, kelas, x.`kode`, p.`id_clusterdesa`, p.`luas`,
-			p.`kelas`, p.`pajak`,  p.pemilik_luar,
-			p.`no_sppt_pbb`, p.`lokasi`, p.`persil_peruntukan_id`, u.nama as namapemilik, w.rt, w.rw, w.dusun,alamat_luar, m.jenis_mutasi, m.tanggalmutasi, rm.nama as sebabmutasi, m.luasmutasi, m.no_c_desa, m.keterangan
-			FROM `data_persil` p
-				LEFT JOIN tweb_penduduk u ON u.id = p.id_pend
-				LEFT JOIN tweb_wil_clusterdesa w ON w.id = p.id_clusterdesa
-				LEFT JOIN ref_persil_kelas x ON x.id = p.kelas
-				LEFT JOIN data_persil_c_desa y ON y.id = p.id_c_desa
-				LEFT JOIN data_persil_mutasi m ON m.id_persil = p.id
-				LEFT JOIN ref_persil_mutasi rm ON m.sebabmutasi = rm.id
-
-			 WHERE p.id_c_desa = ".$id." AND x.kode LIKE '%".$tipe."%'";
-		$query = $this->db->query($strSQL);
-		if ($query->num_rows()>0)
+		$this->db
+			->select('m.*, p.nomor as nopersil, rk.kode as kelas_tanah')
+			->from('mutasi_cdesa m')
+			->join('persil p', 'p.id = m.id_persil', 'left')
+			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
+			->where('m.id_cdesa_masuk', $id_cdesa)
+			->where('rk.tipe', $tipe);
+		$data = $this->db->get()->result_array();
+		foreach ($data as $key => $item)
 		{
-			$data = $query->result_array();
+			$data[$key]['mutasi'] = $this->format_mutasi($item);
 		}
-
-		if ($data['jenis_pemilik'] == 2)
-		{
-			$data['namapemilik'] = $data['pemilik_luar'];
-			$data['nik'] = "-";
-		}
-		$hasil=[];
-		$count= count($data)-1;
-		for ($x = 0; $x <= $count; $x++)
-		{
-			$hasil[]= $data[$x];
-			if( $data[$x]['id']!= $data[$x+1]['id'])
-				$hasil[]=[];
-		}
-		return $hasil;
+		return $data;
 	}
+
+	private function format_mutasi($mutasi)
+	{
+		if($mutasi)
+		{
+			$div = ($mutasi['jenis_mutasi'] == 2)? 'class="out"':null;
+			$hasil = "<p $div>";
+			$hasil .= $mutasi['sebabmutasi'];
+			$hasil .= !empty($mutasi['no_c_desa']) ? " ".ket_mutasi_persil($mutasi['jenis_mutasi'])." C No ".sprintf("%04s",$mutasi['no_c_desa']): null;
+			$hasil .= !empty($mutasi['luas']) ? ", Seluas ".number_format($mutasi['luas'])." m<sup>2</sup>, " : null;
+			$hasil .= !empty($mutasi['tanggal_mutasi']) ? tgl_indo_out($mutasi['tanggal_mutasi'])."<br />" : null;
+			$hasil .= !empty($mutasi['keterangan']) ? $mutasi['keterangan']: null;
+			$hasil .= "</p>";
+
+			return $hasil;
+
+		}
+	}
+
 }
 ?>

@@ -855,24 +855,6 @@ function list_mutasi($mutasi=[])
 	}
 }
 
-function format_mutasi($mutasi=[])
-{
-	if($mutasi)
-	{
-		$div = ($mutasi['jenis_mutasi'] == 2)? 'class="out"':null;
-		$hasil = "<p $div>";
-		$hasil .= $mutasi['sebabmutasi'];
-		$hasil .= !empty($mutasi['no_c_desa']) ? " ".ket_mutasi_persil($mutasi['jenis_mutasi'])." C No ".sprintf("%04s",$mutasi['no_c_desa']): null;
-		$hasil .= !empty($mutasi['luasmutasi']) ? ", Seluas ".number_format($mutasi['luasmutasi'])." m<sup>2</sup>, " : null;
-		$hasil .= !empty($mutasi['tanggalmutasi']) ? tgl_indo_out($mutasi['tanggalmutasi'])."<br />" : null;
-		$hasil .= !empty($mutasi['keterangan']) ? $mutasi['keterangan']: null;
-		$hasil .= "</p>";
-
-		echo $hasil;
-
-	}
-}
-
 function ket_mutasi_persil($id=0)
 {
 	if ($id==1)
