@@ -584,7 +584,7 @@ class Migrasi_2006_ke_2007 extends CI_model {
 		$this->db->where('id', 7)
 			->update('setting_modul', array('url' => 'cdesa/clear'));
 		// Tambah Modul Cdesa
-		$submodul_cdesa = array('209'=>'data_persil', '210'=>'bidang_persil');
+		$submodul_cdesa = array('212'=>'data_persil', '213'=>'bidang_persil');
 		foreach ($submodul_cdesa as $key => $submodul)
 		{
 			$modul_nonmenu = array(
@@ -602,34 +602,6 @@ class Migrasi_2006_ke_2007 extends CI_model {
 			$sql = $this->db->insert_string('setting_modul', $modul_nonmenu) . " ON DUPLICATE KEY UPDATE modul = VALUES(modul), url = VALUES(url), parent = VALUES(parent)";
 			$this->db->query($sql);
 		}
-
-
-
-		// $data = array(
-		// 		'id' => 209,
-		// 		'modul' => 'Persil',
-		// 		'url' => 'data_persil',
-		// 		'aktif' => 1,
-		// 		'ikon' => '',
-		// 		'urut' => 10,
-		// 		'level' => 4,
-		// 		'hidden' => 2,
-		// 		'ikon_kecil' => '',
-		// 		'parent' => 7
-		// 		);
-		// $sql = $this->db->insert_string('setting_modul', $data);
-		// $sql .= " ON DUPLICATE KEY UPDATE
-		// 		modul = VALUES(modul),
-		// 		url = VALUES(url),
-		// 		aktif = VALUES(aktif),
-		// 		ikon = VALUES(ikon),
-		// 		urut = VALUES(urut),
-		// 		level = VALUES(level),
-		// 		hidden = VALUES(hidden),
-		// 		ikon_kecil = VALUES(ikon_kecil),
-		// 		parent = VALUES(parent)
-		// 		";
-		// $this->db->query($sql);
 	}
 
 	private function buat_ref_persil_kelas()
