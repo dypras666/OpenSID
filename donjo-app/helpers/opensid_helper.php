@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-define("VERSION", '20.05-pasca');
+define("VERSION", '20.06-pasca');
 /* Untuk migrasi database. Simpan nilai ini di tabel migrasi untuk menandakan sudah migrasi ke versi ini.
    Versi database = [yyyymmdd][nomor urut dua digit]. Ubah setiap kali mengubah struktur database.
 */
-define('VERSI_DATABASE', '2020050103');
+define('VERSI_DATABASE', '2020060102');
 define("LOKASI_LOGO_DESA", 'desa/logo/');
 define("LOKASI_ARSIP", 'desa/arsip/');
 define("LOKASI_CONFIG_DESA", 'desa/config/');
@@ -654,18 +654,6 @@ function ambilBerkas($nama_berkas, $redirect_url, $unique_id = null, $lokasi = L
 	force_download($nama_berkas, $data);
 }
 
-function autocomplete_str($kolom, $tabel)
-{
-	$CI =& get_instance();
-	$CI->load->database();
-	$data = $CI->db->distinct()->
-		select($kolom)->
-		order_by($kolom)->
-		get($tabel)->result_array();
-
-	return autocomplete_data_ke_str($data);
-}
-
 /**
  * @param array 		(0 => (kolom => teks), 1 => (kolom => teks), ..)
  * @return string 	dalam bentuk siap untuk autocomplete
@@ -943,5 +931,19 @@ function convertToBytes(string $from)
 			}
 		}
 	}
+
+function crawler()
+{
+	$file = APPPATH.'config/crawler-user-agents.json';
+	$data = json_decode(file_get_contents($file), true);
+
+	foreach($data as $entry)
+	{
+		if (preg_match('/'.strtolower($entry['pattern']).'/', $_SERVER['HTTP_USER_AGENT']))
+			return TRUE;
+	}
+
+	return FALSE;
+}
 
 ?>
