@@ -23,7 +23,7 @@
 										<div class="form-group">
 											<label for="nik" class="col-sm-3 control-label">Nama Pemilik</label>
 											<div class="col-sm-8">
-												<input name="nik"  class="form-control input-sm required" type="text" placeholder="Nama Pemilik" value="<?= $persil_detail["namapemilik"] ?>">
+												<input name="nik"  class="form-control input-sm required" maxlength="100" type="text" placeholder="Nama Pemilik" value="<?= $persil_detail["namapemilik"] ?>">
 												<?php if ($mode === 'edit'): ?>
 													<input type="hidden" name="id" value="<?= $persil_detail["id"] ?>"/>
 												<?php elseif ($mode === 'add'): ?>
@@ -40,7 +40,7 @@
 										<div class="form-group">
 											<label for="c_desa"  class="col-sm-3 control-label">Nomor C-DESA</label>
 											<div class="col-sm-8">
-												<input  id="c_desa" class="form-control input-sm angka required" type="text" placeholder="Nomor Surat C-DESA" name="c_desa" value="<?= $persil_detail["c_desa"] ?>">
+												<input  id="c_desa" class="form-control input-sm angka required" maxlength="10" type="text" placeholder="Nomor Surat C-DESA" name="c_desa" value="<?= $persil_detail["c_desa"] ?>">
 											</div>
 										</div>
 										<div class="form-group">
@@ -85,7 +85,7 @@
 										<div class="form-group">
 											<label for="luas_tanah"  class="col-sm-3 control-label">Luas Tanah (M<sup>2</sup>)</label>
 											<div class="col-sm-4">
-												<input  id="luas" name="luas"  type="text"  class="form-control input-sm luas required" placeholder="Luas" value="<?= $persil_detail["luas"] ?>">
+												<input  id="luas" name="luas"  type="text"  class="form-control input-sm luas bilangan_titik required" maxlength="10" placeholder="Luas" value="<?= $persil_detail["luas"] ?>">
 											</div>
 										</div>
 										<div class="form-group">
@@ -154,9 +154,9 @@
 													<?php $no =1; foreach($persil_mutasi as $item) : ?>
 														 <div class="form-group">
 														 	<div class="input-sm col-sm-8">
-																 <p <?= ($item['jenis_mutasi']==2)?'class="error"':null?>> <?= $no++ ?>. 
+																 <p <?= ($item['jenis_mutasi']==2)?'class="error"':null?>> <?= $no++ ?>.
 																 <?= $item['sebabmutasi'] ?> <?= !empty($item['no_c_desa']) ? ket_mutasi_persil($item['jenis_mutasi'])." C-DESA ".sprintf("%04s", $item['no_c_desa']): null ?>
-																 <?= !empty($item['luasmutasi']) ? "seluas ".number_format($item['luasmutasi'])." m<sup>2</sup>" : null ?> pada 
+																 <?= !empty($item['luasmutasi']) ? "seluas ".number_format($item['luasmutasi'])." m<sup>2</sup>" : null ?> pada
 																 <?= tgl_indo_out($item['tanggalmutasi']) ?>
 																  <?= !empty($item['keterangan']) ? "<br />".$item['keterangan']: null ?>
 																</p>
@@ -175,7 +175,7 @@
 													<a href="<?= site_url("data_persil/mutasi/".$persil_detail["id"]."/2") ?>" class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Tambah Data"><i class="fa fa-plus"></i> Sebab Dan Tanggal Perubahan</a>
 												</div>
 											</div>
-										<?php endif; ?>											
+										<?php endif; ?>
 										<div class="form-group">
 											<label for="sid"  class="col-sm-3 control-label">Peruntukan</label>
 											<div class="col-sm-4">
@@ -220,7 +220,7 @@
 										<div class="form-group">
 											<label for="sppt"  class="col-sm-3 control-label">Nomor SPPT PBB</label>
 											<div class="col-sm-8">
-												<input  id="sppt" name="sppt"  type="text"  class="form-control input-sm" placeholder="Tuliskan Nomor SPPT PBB" value="<?= $persil_detail["no_sppt_pbb"] ?>"></input>
+												<input  id="sppt" name="sppt"  type="text"  class="form-control input-sm nomor_sk" maxlength="50" placeholder="Tuliskan Nomor SPPT PBB" value="<?= $persil_detail["no_sppt_pbb"] ?>"></input>
 											</div>
 										</div>
 									</div>
@@ -242,7 +242,7 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#tipe').change(function(){ 
+		$('#tipe').change(function(){
 			var id=$(this).val();
 			$.ajax({
 				url : "<?=site_url('data_persil/kelasid')?>",
@@ -260,7 +260,7 @@
 				}
 			});
 			return false;
-		}); 
+		});
 	});
 
 	function pilih_lokasi(pilih)

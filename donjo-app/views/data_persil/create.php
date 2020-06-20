@@ -132,7 +132,7 @@
 </div>
 <script>
 	$(document).ready(function(){
-		$('#tipe').change(function(){ 
+		$('#tipe').change(function(){
 			var id=$(this).val();
 			$.ajax({
 				url : "<?=site_url('data_persil/kelasid')?>",
@@ -150,7 +150,7 @@
 				}
 			});
 			return false;
-		}); 
+		});
 
 		pilih_pemilik(<?= $cdesa['jenis_pemilik'] ?: 1?>);
 
