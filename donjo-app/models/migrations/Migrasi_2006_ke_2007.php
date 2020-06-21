@@ -905,11 +905,13 @@ class Migrasi_2006_ke_2007 extends CI_model {
 				),
 				'jenis_bidang_persil' => array(
 					'type' => 'INT',
-					'constraint' => 11
+					'constraint' => 11,
+					'null' => TRUE
 				),
 				'peruntukan' => array(
 					'type' => 'INT',
-					'constraint' => 11
+					'constraint' => 11,
+					'null' => TRUE
 				),
 				'no_objek_pajak' => array(
 					'type' => 'VARCHAR',

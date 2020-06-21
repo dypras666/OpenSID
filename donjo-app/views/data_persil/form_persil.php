@@ -51,6 +51,12 @@
 												</select>
 											</div>
 										</div>
+										<div class="form-group">
+											<label for="luas_persil" class="col-sm-3 control-label">Luas Persil Keseluruhan (M2)</label>
+											<div class="col-sm-8">
+												<input name="luas_persil" class="form-control input-sm angka required" type="text" placeholder="Luas persil secara keseluruhan (M2)" value="<?= $persil["luas_persil"] ?>">
+											</div>
+										</div>
 										<div class="form-group ">
 											<label for="jenis_lokasi" class="col-sm-3 control-label">Lokasi Tanah</label>
 											<div class="btn-group col-sm-8 kiri" data-toggle="buttons">
@@ -119,7 +125,7 @@
 	}
 
 	$(document).ready(function(){
-		$('#tipe').change(function(){ 
+		$('#tipe').change(function(){
 			var id=$(this).val();
 			$.ajax({
 				url : "<?=site_url('data_persil/kelasid')?>",

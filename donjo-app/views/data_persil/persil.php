@@ -36,7 +36,7 @@
 					<div class="box box-info">
 						<div class="box-header">
 							<h4 class="text-center"><strong>DAFTAR PERSIL</strong></h4>
-						</div>							
+						</div>
 						<div class="box-body">
 							<div class="row">
 								<div class="col-sm-12">
@@ -71,6 +71,7 @@
 																	<th>Aksi</th>
 																	<th>Nomor Persil</th>
 																	<th>Kelas Tanah</th>
+																	<th>Luas Keseluruhan (M2)</th>
 																	<th>Lokasi</th>
 																	<th>Jumlah Bidang</th>
 																</tr>
@@ -94,6 +95,7 @@
 																			</td>
 																			<td><?= $item['nomor']?></td>
 																			<td><?= $persil_kelas[$item["kelas"]]['kode']?></td>
+																			<td><?= $item['luas_persil']?></td>
 																			<td><?= $item['alamat'] ?: $item['lokasi']?></td>
 																			<td><?= $item['jml_bidang']?></td>
 																		</tr>
