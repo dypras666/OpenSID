@@ -208,9 +208,9 @@ class Cdesa extends Admin_Controller {
 			$data['persil'] = NULL;
 		}
 
-
 		if ($id_bidang)
 		{
+			$data['persil'] = $this->cdesa_model->get_persil($id_bidang);
 			$data["bidang"] = $this->cdesa_model->get_bidang($id_bidang);
 		}
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id_cdesa);
