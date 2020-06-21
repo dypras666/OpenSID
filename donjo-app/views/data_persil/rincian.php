@@ -42,8 +42,8 @@
 			<div class="col-md-12">
 				<div class="box box-info">
 					<div class="box-header with-border">
-						<a href="<?=site_url("cdesa/create_bidang/".$cdesa['id'])?>" class="btn btn-social btn-flat btn-success btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"  title="Tambah Bidang Persil">
-							<i class="fa fa-plus"></i>Tambah Bidang Persil
+						<a href="<?=site_url("cdesa/create_bidang/".$cdesa['id'])?>" class="btn btn-social btn-flat btn-success btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"  title="Tambah Persil">
+							<i class="fa fa-plus"></i>Tambah Persil
 						</a>
 						<a href="<?=site_url('cdesa')?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Daftar C-DESA</a>
 						<a href="<?= site_url("cdesa/form_c_desa/".$cdesa['id'])?>" class="btn btn-social btn-flat bg-purple btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" target="_blank">
@@ -92,7 +92,7 @@
 											<div class="row">
 												<div class="col-sm-9">
 													<div class="box-header with-border">
-														<h3 class="box-title">Daftar Bidang Persil</h3>
+														<h3 class="box-title">Daftar Persil C-Desa</h3>
 													</div>
 												</div>
 												<div class="col-sm-3">

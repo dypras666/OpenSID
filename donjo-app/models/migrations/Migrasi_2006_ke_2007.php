@@ -828,6 +828,11 @@ class Migrasi_2006_ke_2007 extends CI_model {
 					'type' => 'INT',
 					'constraint' => 5
 				),
+				'luas_persil' => array(
+					'type' => 'decimal',
+					'constraint' => 7,
+					'null' => TRUE
+				),
 				'id_wilayah' => array(
 					'type' => 'INT',
 					'constraint' => 11,

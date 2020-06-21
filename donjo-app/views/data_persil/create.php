@@ -109,9 +109,9 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="nama_kepemilikan"  class="col-sm-3 control-label">Nama Kepemilikan</label>
+											<label for="nama_kepemilikan"  class="col-sm-3 control-label">Nama Pemilik Tertulis di C-Desa</label>
 											<div class="col-sm-8">
-												<input class="form-control input-sm nama required" type="text" placeholder="Nama pemilik di Surat C-DESA" name="nama_kepemilikan" value="<?= ($cdesa["nama_kepemilikan"])?sprintf("%04s", $cdesa["nama_kepemilikan"]): NULL ?>" <?php !($pemilik or $cdesa['jenis_pemilik'] == 2) and print('disabled') ?>>
+												<input class="form-control input-sm nama required" type="text" placeholder="Nama pemilik sebagaimana tertulis di Surat C-DESA" name="nama_kepemilikan" value="<?= ($cdesa["nama_kepemilikan"])?sprintf("%04s", $cdesa["nama_kepemilikan"]): NULL ?>" <?php !($pemilik or $cdesa['jenis_pemilik'] == 2) and print('disabled') ?>>
 											</div>
 										</div>
 									</div>
