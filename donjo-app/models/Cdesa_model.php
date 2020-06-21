@@ -197,11 +197,11 @@ class Cdesa_model extends CI_Model {
 	public function simpan_mutasi($id_cdesa, $id_bidang, $post)
 	{
 		$data = array();
-		$data['id_persil'] = $this->data_persil_model->simpan_persil($post);
+		$data['id_persil'] = $post['id_persil'];
 		$data['id_cdesa_masuk'] = $id_cdesa;
-		$data['jenis_bidang_persil'] = $post['jenis_bidang_persil'];
+		// $data['jenis_bidang_persil'] = $post['jenis_bidang_persil'];
 		$data['no_bidang_persil'] = bilangan($post['no_bidang_persil']);
-		$data['peruntukan'] = $post['peruntukan'];
+		// $data['peruntukan'] = $post['peruntukan'];
 		$data['no_objek_pajak'] = strip_tags($post['no_objek_pajak']);
 		$data['no_sppt_pbb'] = strip_tags($post['no_sppt_pbb']);
 

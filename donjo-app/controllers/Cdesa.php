@@ -199,14 +199,24 @@ class Cdesa extends Admin_Controller {
 		$header = $this->header_model->get_data();
 		$header['minsidebar'] = 1;
 
+		if (!empty($id_persil = $this->input->post('id_persil')))
+		{
+			$data['persil'] = $this->data_persil_model->get_persil($id_persil);
+		}
+		else
+		{
+			$data['persil'] = NULL;
+		}
+
+
 		if ($id_bidang)
 		{
-			$data["persil"] = $this->cdesa_model->get_persil($id_bidang);
 			$data["bidang"] = $this->cdesa_model->get_bidang($id_bidang);
 		}
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id_cdesa);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id_cdesa);
 
+		$data['list_persil'] = $this->data_persil_model->list_persil();
 		$data["persil_lokasi"] = $this->data_persil_model->list_dusunrwrt();
 		$data["persil_peruntukan"] = $this->cdesa_model->list_persil_peruntukan();
 		$data["persil_jenis"] = $this->cdesa_model->list_persil_jenis();
@@ -221,7 +231,6 @@ class Cdesa extends Admin_Controller {
 
 	public function simpan_bidang($id_cdesa, $id_bidang='')
 	{
-		$post = $this->input->post();
 		$data = $this->cdesa_model->simpan_mutasi($id_cdesa, $id_bidang, $this->input->post());
 		redirect("cdesa/rincian/$id_cdesa");
 	}

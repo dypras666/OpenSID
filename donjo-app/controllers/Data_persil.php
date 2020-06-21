@@ -126,13 +126,13 @@ class Data_persil extends Admin_Controller {
 		$this->load->view('footer');
 	}
 
-	public function form($id)
+	public function form($id='')
 	{
 		$header = $this->header_model->get_data();
 		$header['minsidebar'] = 1;
 		$this->tab_ini = 13;
 
-		$data["persil"] = $this->data_persil_model->get_persil($id);
+		if ($id) $data["persil"] = $this->data_persil_model->get_persil($id);
 		$data["persil_lokasi"] = $this->data_persil_model->list_dusunrwrt();
 		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
 		$this->load->view('header', $header);

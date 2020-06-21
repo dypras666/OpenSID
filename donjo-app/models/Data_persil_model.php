@@ -81,6 +81,17 @@ class Data_persil_model extends CI_Model {
 		return $data;
 	}
 
+	public function list_persil()
+	{
+		$data = $this->db
+			->select('p.id, nomor')
+			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as lokasi')
+			->from('persil p')
+			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah')
+			->get()->result_array();
+		return $data;
+	}
+
 	public function list_c_desa($kat='', $mana=0, $offset, $per_page)
 	{
 		$data = [];
@@ -119,7 +130,7 @@ class Data_persil_model extends CI_Model {
 
 	public function get_persil($id)
 	{
-		$data = $this->db->select('p.*, k.kode, k.ndesc')
+		$data = $this->db->select('p.*, k.kode, k.tipe, k.ndesc')
 			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
 			->from('persil p')
 			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
