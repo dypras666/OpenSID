@@ -175,7 +175,7 @@
 													</div>
 													<div id="mutasi" class="panel-collapse">
 														<div class="form-group">
-															<label for="tanggal_mutasi" class="col-sm-3 control-label">Tanggal Perubahan</label>
+															<label for="tanggal_mutasi" class="col-sm-3 control-label required">Tanggal Perubahan</label>
 															<div class="col-sm-4">
 																<div class="input-group input-group-sm date">
 																	<div class="input-group-addon">
@@ -186,7 +186,7 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="jenis_mutasi" class="col-sm-3 control-label">Sebab Mutasi</label>
+															<label for="jenis_mutasi" class="col-sm-3 control-label required">Sebab Mutasi</label>
 															<div class="col-sm-4">
 																<select class="form-control input-sm" name="jenis_mutasi" >
 																	<option value>-- Pilih Sebab Mutasi--</option>
@@ -211,7 +211,12 @@
 														<div class="form-group">
 															<label for="id_cdesa_keluar" class="col-sm-3 control-label">Perolehan Dari</label>
 															<div class="col-sm-9">
-																<input name="id_cdesa_keluar" type="text" class="form-control input-sm angka" placeholder="Nomor C-DESA dari mana bidang persil ini dimutasikan" value="<?= $bidang['cdesa_keluar'] || ''?>">
+																<select class="form-control select2 input-sm" name="id_cdesa_keluar"
+																	<option value='' selected="selected">-- Pilih C-DESA dari mana bidang persil ini dimutasikan --</option>
+																	<?php foreach ($list_cdesa as $data): ?>
+																		<option value="<?= $data['nomor']?>" <?php selected($bidang['id_cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
+																	<?php endforeach;?>
+																</select>
 															</div>
 														</div>
 														<div class="form-group">

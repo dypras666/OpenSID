@@ -27,14 +27,16 @@
 		min-height:275px;
 	}
 	.padat {width: 1%;}
+	}
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>Rincian C-DESA</h1>
+		<h1>Rincian Mutasi C-DESA</h1>
 		<ol class="breadcrumb">
 			<li><a href="<?= site_url('hom_sid')?>"><i class="fa fa-home"></i> Home</a></li>
 			<li><a href="<?= site_url('cdesa')?>"> Daftar C-DESA</a></li>
-			<li class="active">Rincian C-DESA</li>
+			<li><a href="<?= site_url('cdesa/rincian/'.$cdesa[id])?>"> Rincian C-DESA</a></li>
+			<li class="active">Mutasi C-Desa</li>
 		</ol>
 	</section>
 	<section class="content" id="maincontent">
@@ -46,8 +48,8 @@
 							<i class="fa fa-plus"></i>Tambah Mutasi Persil
 						</a>
 						<a href="<?=site_url('cdesa')?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Daftar C-DESA</a>
-						<a href="<?= site_url("cdesa/form_c_desa/".$cdesa['id'])?>" class="btn btn-social btn-flat bg-purple btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" target="_blank">
-							<i class="fa fa-print"></i>Cetak C-DESA
+						</a>
+						<a href="<?=site_url('cdesa/rincian/'.$cdesa[id])?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Rincian C-DESA</a>
 						</a>
 					</div>
 					<div class="box-body">
@@ -62,7 +64,7 @@
 												<h3 class="box-title">Rincian C-DESA</h3>
 											</div>
 											<div class="box-body">
-												<table class="table table-bordered  table-striped table-hover" >
+												<table class="table table-bordered table-striped table-hover" >
 													<tbody>
 														<tr>
 															<td nowrap>Nama Pemilik</td>
@@ -81,18 +83,48 @@
 															<td> : <?= $cdesa['nomor']?></td>
 														</tr>
 														<tr>
-															<td nowrap>Nama Kepemilikan</td>
+															<td nowrap>Nama Pemilik Tertulis di C-Desa</td>
 															<td> : <?= $cdesa["nama_kepemilikan"]?></td>
 														</tr>
 													</tbody>
 												</table>
 											</div>
 										</div>
+
+										<div class="col-sm-12">
+											<div class="box-header with-border">
+												<h3 class="box-title">Rincian Persil</h3>
+											</div>
+											<div class="box-body">
+												<table class="table table-bordered table-striped table-hover" >
+													<tbody>
+														<tr>
+															<td nowrap>Nomor Persil</td>
+															<td> : <?= $persil['nomor']?></td>
+														</tr>
+														<tr>
+															<td nowrap>Kelas Tanah</td>
+															<td> :  <?= $persil["kode"].' - '.$persil["ndesc"]?></td>
+														</tr>
+														<tr>
+															<td nowrap>Luas Keseluruhan (M2)</td>
+															<td> :  <?= $persil["luas_persil"]?></td>
+														</tr>
+														<tr>
+															<td nowrap>Lokasi</td>
+															<td> :  <?= $persil["alamat"] ?: $persil["lokasi"]?></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+
 										<div class="col-sm-12">
 											<div class="row">
 												<div class="col-sm-9">
 													<div class="box-header with-border">
-														<h3 class="box-title">Daftar Persil C-Desa</h3>
+														<h3 class="box-title">Daftar Mutasi Persil <?= $persil["nomor"]?></h3>
 													</div>
 												</div>
 												<div class="col-sm-3">
@@ -111,28 +143,33 @@
 												<table class="table table-bordered table-striped dataTable table-hover">
 													<thead class="bg-gray disabled color-palette">
 														<tr>
-															<th>No</th>
-															<th>Aksi</th>
-															<th>No. Persil</th>
-															<th>Kelas Tanah</th>
-															<th>Lokasi</th>
-															<th>Luas Keseluruhan (M2)</th>
-															<th>Jumlah Mutasi</th>
+															<th class="padat">No</th>
+															<th class="padat">Aksi</th>
+															<th>No. Bidang Persil</th>
+															<th>Luas Masuk (M2)</th>
+															<th>Luas Keluar (M2)</th>
+															<th>NOP</th>
+															<th>No. SPPT PBB</th>
+															<th>Tanggal Mutasi</th>
+															<th>Keterangan</th>
 														</tr>
 													</thead>
 													<tbody>
 														<?php $nomer = $paging->offset;?>
-														<?php foreach ($persil as $key=>$item): $nomer++;?>
+														<?php foreach ($bidang as $key=>$item): $nomer++;?>
 															<tr>
-																<td class="text-center padat"><?= $nomer?></td>
-																<td nowrap class="text-center padat">
-																	<a href='<?= site_url("cdesa/mutasi/$cdesa[id]/$item[id]")?>' class="btn bg-purple btn-flat btn-sm"  title="Mutasi"><i class="fa fa-bars"></i></a>
+																<td class="text-center"><?= $nomer?></td>
+																<td nowrap class="text-center">
+																	<a href="<?= site_url("cdesa/create_bidang/$cdesa[id]/$item[id]")?>" class="btn bg-orange btn-flat btn-sm" title="Ubah"><i class="fa fa-edit"></i></a>
+																	<a href="#" data-href="<?= site_url("cdesa/hapus_bidang/$cdesa[id]/$item[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																</td>
-																<td><a href="<?= site_url("data_persil/rincian/".$item["id_persil"])?>"><?= $item['nomor']?></a></td>
-																<td><?= $item['kelas_tanah']?></td>
-																<td><?= $item['alamat'] ?: $item['lokasi']?></td>
-																<td><?= $item['luas_persil']?></td>
-																<td><?= $item['jml_mutasi']?></td>
+																<td><?= $item['no_bidang_persil']?></td>
+																<td><?= $item['luas_masuk']?></td>
+																<td><?= $item['luas_keluar']?></td>
+																<td><?= $item['no_objek_pajak']?></td>
+																<td><?= $item['no_sppt_pbb']?></td>
+																<td><?= tgl_indo_out($item['tanggal_mutasi'])?></td>
+																<td><?= $item['keterangan']?></td>
 															</tr>
 														<?php endforeach; ?>
 													</tbody>
@@ -182,6 +219,25 @@
                     </div>
                   </div>
 								</form>
+								</div>
+							</div>
+						</div>
+						<div class='modal fade' id='confirm-delete' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+							<div class='modal-dialog'>
+								<div class='modal-content'>
+									<div class='modal-header'>
+										<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+										<h4 class='modal-title' id='myModalLabel'><i class='fa fa-exclamation-triangle text-red'></i> Konfirmasi</h4>
+									</div>
+									<div class='modal-body btn-info'>
+										Apakah Anda yakin ingin menghapus data ini?
+									</div>
+									<div class='modal-footer'>
+										<button type="button" class="btn btn-social btn-flat btn-warning btn-sm" data-dismiss="modal"><i class='fa fa-sign-out'></i> Tutup</button>
+										<a class='btn-ok'>
+											<button type="button" class="btn btn-social btn-flat btn-danger btn-sm" id="ok-delete"><i class='fa fa-trash-o'></i> Hapus</button>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>

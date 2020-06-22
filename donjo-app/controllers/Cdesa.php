@@ -71,10 +71,24 @@ class Cdesa extends Admin_Controller {
 		$data = array();
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id);
-		$data['bidang'] = $this->cdesa_model->get_list_bidang($id);
+		$data['persil'] = $this->cdesa_model->get_list_persil($id);
 		$this->load->view('header', $header);
 		$this->load->view('nav',$nav);
 		$this->load->view('data_persil/rincian', $data);
+		$this->load->view('footer');
+	}
+
+	public function mutasi($id_cdesa, $id_persil)
+	{
+		$header = $this->header_model->get_data();
+		$data = array();
+		$data['cdesa'] = $this->cdesa_model->get_cdesa($id_cdesa);
+		$data['pemilik'] = $this->cdesa_model->get_pemilik($id_cdesa);
+		$data['bidang'] = $this->cdesa_model->get_list_bidang($id_cdesa);
+		$data['persil'] = $this->data_persil_model->get_persil($id_persil);
+		$this->load->view('header', $header);
+		$this->load->view('nav',$nav);
+		$this->load->view('data_persil/mutasi_persil', $data);
 		$this->load->view('footer');
 	}
 
@@ -214,6 +228,7 @@ class Cdesa extends Admin_Controller {
 			$data["bidang"] = $this->cdesa_model->get_bidang($id_bidang);
 		}
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id_cdesa);
+		$data['list_cdesa'] = $this->cdesa_model->list_c_desa(0, 10000);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id_cdesa);
 
 		$data['list_persil'] = $this->data_persil_model->list_persil();
@@ -232,7 +247,10 @@ class Cdesa extends Admin_Controller {
 	public function simpan_bidang($id_cdesa, $id_bidang='')
 	{
 		$data = $this->cdesa_model->simpan_mutasi($id_cdesa, $id_bidang, $this->input->post());
-		redirect("cdesa/rincian/$id_cdesa");
+		if ($id_bidang)
+			redirect("cdesa/mutasi/$id_cdesa/$data[id_persil]");
+		else
+			redirect("cdesa/rincian/$id_cdesa");
 	}
 
 	public function hapus_bidang($cdesa, $id_bidang)

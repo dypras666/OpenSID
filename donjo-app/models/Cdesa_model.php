@@ -117,9 +117,8 @@ class Cdesa_model extends CI_Model {
 
 	public function get_bidang($id_bidang)
 	{
-		$data = $this->db->select('m.*, c.nomor as cdesa_keluar')
+		$data = $this->db->select('m.*')
 			->from('mutasi_cdesa m')
-			->join('cdesa c', 'c.id = m.id_cdesa_keluar', 'left')
 			->where('m.id', $id_bidang)
 			->get('')
 			->row_array();
@@ -254,9 +253,14 @@ class Cdesa_model extends CI_Model {
 
 	public function get_list_bidang($id_cdesa)
 	{
+		$nomor_cdesa = $this->db->select('nomor')
+			->get('cdesa')
+			->row()->nomor;
 		$this->db
 			->select('m.*, p.nomor, rk.kode as kelas_tanah, dp.nama as peruntukan, dj.nama as jenis_persil')
 			->select('CONCAT("RT ", rt, " / RW ", rw, " - ", dusun) as lokasi, p.lokasi as alamat')
+			->select("IF (m.id_cdesa_masuk = {$id_cdesa} and m.id_cdesa_keluar IS NULL, m.luas, '') AS luas_masuk")
+			->select("IF (m.id_cdesa_keluar = {$nomor_cdesa}, m.luas, '') AS luas_keluar")
 			->from('mutasi_cdesa m')
 			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
 			->join('persil p', 'p.id = m.id_persil', 'left')
@@ -264,7 +268,27 @@ class Cdesa_model extends CI_Model {
 			->join('data_persil_jenis dj', 'm.jenis_bidang_persil = dj.id', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
-			->where('m.id_cdesa_masuk', $id_cdesa);
+			->where('m.id_cdesa_masuk', $id_cdesa)
+			->or_where('m.id_cdesa_keluar', $nomor_cdesa)
+			->order_by('tanggal_mutasi');
+		$data = $this->db->get()->result_array();
+		return $data;
+	}
+
+	public function get_list_persil($id_cdesa)
+	{
+		$this->db
+			->select('p.*, rk.kode as kelas_tanah')
+			->select('COUNT(m.id) as jml_mutasi')
+			->select('CONCAT("RT ", rt, " / RW ", rw, " - ", dusun) as lokasi, p.lokasi as alamat')
+			->from('mutasi_cdesa m')
+			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
+			->join('persil p', 'p.id = m.id_persil', 'left')
+			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
+			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
+			->where('m.id_cdesa_masuk', $id_cdesa)
+			->or_where('m.id_cdesa_keluar', $id_cdesa)
+			->group_by('p.id');
 		$data = $this->db->get()->result_array();
 		return $data;
 	}
