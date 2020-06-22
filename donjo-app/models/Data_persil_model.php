@@ -143,12 +143,11 @@ class Data_persil_model extends CI_Model {
 	public function get_list_bidang($id)
 	{
 		$this->db
-			->select('m.*, m.id_cdesa_masuk, c.nomor as cdesa_masuk, dp.nama as peruntukan, dj.nama as jenis_persil')
+			->select('m.*, m.id_cdesa_masuk, c.nomor as cdesa_masuk, k.id as id_cdesa_keluar')
 			->from('persil p')
 			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
 			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
-			->join('data_persil_peruntukan dp', 'm.peruntukan = dp.id', 'left')
-			->join('data_persil_jenis dj', 'm.jenis_bidang_persil = dj.id', 'left')
+			->join('cdesa k', 'k.nomor = m.cdesa_keluar', 'left')
 			->where('m.id_persil', $id);
 		$data = $this->db->get()->result_array();
 		return $data;

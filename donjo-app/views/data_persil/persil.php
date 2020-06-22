@@ -76,7 +76,7 @@
 																	<th>Kelas Tanah</th>
 																	<th>Luas Keseluruhan (M2)</th>
 																	<th>Lokasi</th>
-																	<th>Jumlah Bidang</th>
+																	<th>Jumlah Mutasi</th>
 																</tr>
 															</thead>
 															<tbody>

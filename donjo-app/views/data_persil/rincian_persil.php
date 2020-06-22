@@ -78,7 +78,7 @@
 											<div class="row">
 												<div class="col-sm-9">
 													<div class="box-header with-border">
-														<h3 class="box-title">Daftar Bidang Persil</h3>
+														<h3 class="box-title">Daftar Mutasi Persil</h3>
 													</div>
 												</div>
 												<div class="col-sm-3">
@@ -98,13 +98,13 @@
 													<thead class="bg-gray disabled color-palette">
 														<tr>
 															<th>No</th>
-															<th>C-Desa</th>
+															<th>C-Desa Masuk</th>
+															<th>C-Desa Keluar</th>
 															<th>No. Bidang Persil</th>
 															<th>Luas (M2)</th>
-															<th>Tipe Persil</th>
-															<th>Peruntukan</th>
 															<th>NOP</th>
 															<th>No. SPPT PBB</th>
+															<th>Tanggal Mutasi</th>
 															<th>Keterangan</th>
 														</tr>
 													</thead>
@@ -114,12 +114,12 @@
 															<tr>
 																<td class="text-center"><?= $nomer?></td>
 																<td><a href="<?= site_url("cdesa/rincian/".$item["id_cdesa_masuk"])?>"><?= $item['cdesa_masuk']?></a></td>
+																<td><a href="<?= site_url("cdesa/rincian/".$item["id_cdesa_keluar"])?>"><?= $item['cdesa_keluar']?></a></td>
 																<td><?= $item['no_bidang_persil']?></td>
 																<td><?= $item['luas']?></td>
-																<td><?= $item['jenis_persil']?></td>
-																<td><?= $item['peruntukan']?></td>
 																<td><?= $item['no_objek_pajak']?></td>
 																<td><?= $item['no_sppt_pbb']?></td>
+																<td><?= tgl_indo_out($item['tanggal_mutasi'])?></td>
 																<td><?= $item['keterangan']?></td>
 															</tr>
 														<?php endforeach; ?>

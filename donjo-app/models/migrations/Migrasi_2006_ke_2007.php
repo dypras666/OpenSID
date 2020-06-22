@@ -871,7 +871,7 @@ class Migrasi_2006_ke_2007 extends CI_model {
 					'constraint' => 5,
 					'null' => TRUE
 				),
-				'id_cdesa_keluar' => array(
+				'cdesa_keluar' => array(
 					'type' => 'INT',
 					'unsigned' => TRUE,
 					'constraint' => 5,

@@ -209,12 +209,12 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="id_cdesa_keluar" class="col-sm-3 control-label">Perolehan Dari</label>
+															<label for="cdesa_keluar" class="col-sm-3 control-label">Perolehan Dari</label>
 															<div class="col-sm-9">
-																<select class="form-control select2 input-sm" name="id_cdesa_keluar"
+																<select class="form-control select2 input-sm" name="cdesa_keluar"
 																	<option value='' selected="selected">-- Pilih C-DESA dari mana bidang persil ini dimutasikan --</option>
 																	<?php foreach ($list_cdesa as $data): ?>
-																		<option value="<?= $data['nomor']?>" <?php selected($bidang['id_cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
+																		<option value="<?= $data['nomor']?>" <?php selected($bidang['cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
 																	<?php endforeach;?>
 																</select>
 															</div>

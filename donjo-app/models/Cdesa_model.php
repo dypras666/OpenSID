@@ -47,6 +47,7 @@ class Cdesa_model extends CI_Model {
 	{
 		$this->db->from('cdesa c')
 			->join('mutasi_cdesa m', 'm.id_cdesa_masuk = c.id', 'left')
+			->join('mutasi_cdesa keluar', 'keluar.cdesa_keluar = c.nomor', 'left')
 			->join('persil p', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
 			->join('cdesa_penduduk cu', 'cu.id_cdesa = c.id', 'left')
@@ -82,7 +83,7 @@ class Cdesa_model extends CI_Model {
 			->select('u.nik AS nik, u.nama as namapemilik, w.*')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
-			->select('COUNT(m.id_cdesa_masuk) AS jumlah')
+			->select('COUNT(m.id) + COUNT(keluar.id) AS jumlah')
 			->select("SUM(CASE WHEN k.tipe = 'BASAH' THEN m.luas ELSE 0 END) as basah")
 			->select("SUM(CASE WHEN k.tipe = 'KERING' THEN m.luas ELSE 0 END) as kering")
 			->group_by('c.id, cu.id')
@@ -210,7 +211,7 @@ class Cdesa_model extends CI_Model {
 		$data['tanggal_mutasi'] = $post['tanggal_mutasi'] ? tgl_indo_in($post['tanggal_mutasi']) : NULL;
 		$data['jenis_mutasi'] = $post['jenis_mutasi'] ?: NULL;
 		$data['luas'] = bilangan_titik($post['luas']) ?: NULL;
-		$data['id_cdesa_keluar'] = bilangan($post['id_cdesa_keluar']) ?: NULL;
+		$data['cdesa_keluar'] = bilangan($post['cdesa_keluar']) ?: NULL;
 		$data['keterangan'] = strip_tags($post['keterangan']) ?: NULL;
 
 		if ($id_bidang)
@@ -254,13 +255,14 @@ class Cdesa_model extends CI_Model {
 	public function get_list_bidang($id_cdesa)
 	{
 		$nomor_cdesa = $this->db->select('nomor')
+			->where('id', $id_cdesa)
 			->get('cdesa')
 			->row()->nomor;
 		$this->db
 			->select('m.*, p.nomor, rk.kode as kelas_tanah, dp.nama as peruntukan, dj.nama as jenis_persil')
 			->select('CONCAT("RT ", rt, " / RW ", rw, " - ", dusun) as lokasi, p.lokasi as alamat')
-			->select("IF (m.id_cdesa_masuk = {$id_cdesa} and m.id_cdesa_keluar IS NULL, m.luas, '') AS luas_masuk")
-			->select("IF (m.id_cdesa_keluar = {$nomor_cdesa}, m.luas, '') AS luas_keluar")
+			->select("IF (m.id_cdesa_masuk = {$id_cdesa} and m.cdesa_keluar IS NULL, m.luas, '') AS luas_masuk")
+			->select("IF (m.cdesa_keluar IS NOT NULL, m.luas, '') AS luas_keluar")
 			->from('mutasi_cdesa m')
 			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
 			->join('persil p', 'p.id = m.id_persil', 'left')
@@ -269,7 +271,7 @@ class Cdesa_model extends CI_Model {
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
 			->where('m.id_cdesa_masuk', $id_cdesa)
-			->or_where('m.id_cdesa_keluar', $nomor_cdesa)
+			->or_where('m.cdesa_keluar', $nomor_cdesa)
 			->order_by('tanggal_mutasi');
 		$data = $this->db->get()->result_array();
 		return $data;
@@ -277,6 +279,10 @@ class Cdesa_model extends CI_Model {
 
 	public function get_list_persil($id_cdesa)
 	{
+		$nomor_cdesa = $this->db->select('nomor')
+			->where('id', $id_cdesa)
+			->get('cdesa')
+			->row()->nomor;
 		$this->db
 			->select('p.*, rk.kode as kelas_tanah')
 			->select('COUNT(m.id) as jml_mutasi')
@@ -287,7 +293,7 @@ class Cdesa_model extends CI_Model {
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
 			->where('m.id_cdesa_masuk', $id_cdesa)
-			->or_where('m.id_cdesa_keluar', $id_cdesa)
+			->or_where('m.cdesa_keluar', $nomor_cdesa)
 			->group_by('p.id');
 		$data = $this->db->get()->result_array();
 		return $data;

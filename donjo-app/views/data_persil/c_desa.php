@@ -73,7 +73,7 @@
 																	<th>Nama di C-Desa</th>
 																	<th>Nama Pemilik</th>
 																	<th>NIK</th>
-																	<th nowrap>Jumlah Bidang</th>
+																	<th nowrap>Jumlah Mutasi</th>
 																</tr>
 															</thead>
 															<tbody>
