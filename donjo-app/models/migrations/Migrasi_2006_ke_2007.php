@@ -587,7 +587,7 @@ class Migrasi_2006_ke_2007 extends CI_model {
 		$this->db->where('id', 7)
 			->update('setting_modul', array('url' => 'cdesa/clear'));
 		// Tambah Modul Cdesa
-		$submodul_cdesa = array('212'=>'data_persil', '213'=>'bidang_persil');
+		$submodul_cdesa = array('212'=>'data_persil');
 		foreach ($submodul_cdesa as $key => $submodul)
 		{
 			$modul_nonmenu = array(
@@ -896,7 +896,8 @@ class Migrasi_2006_ke_2007 extends CI_model {
 				),
 				'no_bidang_persil' => array(
 					'type' => 'TINYINT',
-					'constraint' => 3
+					'constraint' => 3,
+					'null' => TRUE
 				),
 				'luas' => array(
 					'type' => 'decimal',

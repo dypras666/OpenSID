@@ -150,7 +150,7 @@
 														<div class="form-group">
 															<label for="no_bidang_persil" class="col-sm-3 control-label">Nomor Bidang Persil</label>
 															<div class="col-sm-4">
-																<input name="no_bidang_persil" type="text" class="form-control input-sm digits required" placeholder="Nomor Bidang Persil" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
+																<input name="no_bidang_persil" type="text" class="form-control input-sm digits" placeholder="Nomor Bidang Persil" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
 															</div>
 														</div>
 														<div class="form-group">
@@ -175,20 +175,20 @@
 													</div>
 													<div id="mutasi" class="panel-collapse">
 														<div class="form-group">
-															<label for="tanggal_mutasi" class="col-sm-3 control-label required">Tanggal Perubahan</label>
+															<label for="tanggal_mutasi" class="col-sm-3 control-label">Tanggal Perubahan</label>
 															<div class="col-sm-4">
 																<div class="input-group input-group-sm date">
 																	<div class="input-group-addon">
 																		<i class="fa fa-calendar"></i>
 																	</div>
-																	<input class="form-control input-sm pull-right tgl_indo" name="tanggal_mutasi" type="text" value="<?= tgl_indo_out($bidang['tanggal_mutasi'])?>">
+																	<input class="form-control input-sm pull-right tgl_indo required" name="tanggal_mutasi" type="text" value="<?= tgl_indo_out($bidang['tanggal_mutasi'])?>">
 																</div>
 															</div>
 														</div>
 														<div class="form-group">
 															<label for="jenis_mutasi" class="col-sm-3 control-label required">Sebab Mutasi</label>
 															<div class="col-sm-4">
-																<select class="form-control input-sm" name="jenis_mutasi" >
+																<select class="form-control input-sm required" name="jenis_mutasi" >
 																	<option value>-- Pilih Sebab Mutasi--</option>
 																	<?php foreach ($persil_sebab_mutasi as $key => $item): ?>
 																		<option value="<?= $item['id'] ?>" <?php selected($key, $bidang['jenis_mutasi'])?>><?= $item['nama']?></option>
@@ -211,7 +211,7 @@
 														<div class="form-group">
 															<label for="cdesa_keluar" class="col-sm-3 control-label">Perolehan Dari</label>
 															<div class="col-sm-9">
-																<select class="form-control select2 input-sm" name="cdesa_keluar"
+																<select class="form-control select2 input-sm" name="cdesa_keluar">
 																	<option value='' selected="selected">-- Pilih C-DESA dari mana bidang persil ini dimutasikan --</option>
 																	<?php foreach ($list_cdesa as $data): ?>
 																		<option value="<?= $data['nomor']?>" <?php selected($bidang['cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>

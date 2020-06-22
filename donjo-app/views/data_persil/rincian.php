@@ -128,7 +128,7 @@
 																<td nowrap class="text-center padat">
 																	<a href='<?= site_url("cdesa/mutasi/$cdesa[id]/$item[id]")?>' class="btn bg-purple btn-flat btn-sm"  title="Mutasi"><i class="fa fa-bars"></i></a>
 																</td>
-																<td><a href="<?= site_url("data_persil/rincian/".$item["id_persil"])?>"><?= $item['nomor']?></a></td>
+																<td><a href="<?= site_url("data_persil/rincian/".$item["id"])?>"><?= $item['nomor']?></a></td>
 																<td><?= $item['kelas_tanah']?></td>
 																<td><?= $item['alamat'] ?: $item['lokasi']?></td>
 																<td><?= $item['luas_persil']?></td>
