@@ -44,10 +44,10 @@
 			<div class="col-md-12">
 				<div class="box box-info">
 					<div class="box-header with-border">
-						<a href="<?=site_url("cdesa/create_bidang/".$cdesa['id'])?>" class="btn btn-social btn-flat btn-success btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"  title="Tambah Persil">
+						<a href="<?=site_url("cdesa/create_bidang/".$cdesa['id'])."/".$persil['id']?>" class="btn btn-social btn-flat btn-success btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"  title="Tambah Persil">
 							<i class="fa fa-plus"></i>Tambah Mutasi Persil
 						</a>
-						<a href="<?=site_url('cdesa')?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Daftar C-DESA</a>
+						<a href="<?=site_url('cdesa')?>" class="btn btn-social btn-flat btn-primary btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Daftar C-DESA</a>
 						</a>
 						<a href="<?=site_url('cdesa/rincian/'.$cdesa[id])?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Daftar C-DESA"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Rincian C-DESA</a>
 						</a>
@@ -160,7 +160,7 @@
 															<tr>
 																<td class="text-center"><?= $nomer?></td>
 																<td nowrap class="text-center">
-																	<a href="<?= site_url("cdesa/create_bidang/$cdesa[id]/$item[id]")?>" class="btn bg-orange btn-flat btn-sm" title="Ubah"><i class="fa fa-edit"></i></a>
+																	<a href="<?= site_url("cdesa/create_bidang/$cdesa[id]/$item[id_persil]/$item[id]")?>" class="btn bg-orange btn-flat btn-sm" title="Ubah"><i class="fa fa-edit"></i></a>
 																	<a href="#" data-href="<?= site_url("cdesa/hapus_bidang/$cdesa[id]/$item[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																</td>
 																<td><?= $item['no_bidang_persil']?></td>

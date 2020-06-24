@@ -19,6 +19,9 @@
 					<div class="box-body">
 						<div class="box-header with-border">
 							<a href="<?= site_url('cdesa/rincian/'. $cdesa[id])?>" class="btn btn-social btn-flat btn-primary btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Rincian C-Desa"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Rincian C-Desa</a>
+							<?php if ($persil): ?>
+								<a href="<?= site_url('cdesa/mutasi/'. $cdesa[id].'/'.$persil['id'])?>" class="btn btn-social btn-flat btn-info btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Rincian C-Desa"><i class="fa fa-arrow-circle-o-left"></i> Kembali Ke Rincian Mutasi C-Desa</a>
+							<?php endif; ?>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">

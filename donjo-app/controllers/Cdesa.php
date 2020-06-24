@@ -204,7 +204,7 @@ class Cdesa extends Admin_Controller {
 		}
 	}
 
-	public function create_bidang($id_cdesa, $id_bidang='')
+	public function create_bidang($id_cdesa, $id_persil='', $id_bidang='')
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
@@ -213,7 +213,9 @@ class Cdesa extends Admin_Controller {
 		$header = $this->header_model->get_data();
 		$header['minsidebar'] = 1;
 
-		if (!empty($id_persil = $this->input->post('id_persil')))
+		if (empty($id_persil)) $id_persil = $this->input->post('id_persil');
+
+		if ($id_persil)
 		{
 			$data['persil'] = $this->data_persil_model->get_persil($id_persil);
 		}
