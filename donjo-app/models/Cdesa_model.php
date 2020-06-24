@@ -252,7 +252,7 @@ class Cdesa_model extends CI_Model {
 		return $data;
 	}
 
-	public function get_list_bidang($id_cdesa)
+	public function get_list_bidang($id_cdesa, $id_persil='')
 	{
 		$nomor_cdesa = $this->db->select('nomor')
 			->where('id', $id_cdesa)
@@ -270,9 +270,13 @@ class Cdesa_model extends CI_Model {
 			->join('data_persil_jenis dj', 'm.jenis_bidang_persil = dj.id', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
-			->where('m.id_cdesa_masuk', $id_cdesa)
-			->or_where('m.cdesa_keluar', $nomor_cdesa)
+			->group_start()
+				->where('m.id_cdesa_masuk', $id_cdesa)
+				->or_where('m.cdesa_keluar', $nomor_cdesa)
+			->group_end()
 			->order_by('tanggal_mutasi');
+		if ($id_persil)
+			$this->db->where('m.id_persil', $id_persil);
 		$data = $this->db->get()->result_array();
 		return $data;
 	}

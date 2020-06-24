@@ -84,7 +84,7 @@ class Cdesa extends Admin_Controller {
 		$data = array();
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id_cdesa);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id_cdesa);
-		$data['bidang'] = $this->cdesa_model->get_list_bidang($id_cdesa);
+		$data['bidang'] = $this->cdesa_model->get_list_bidang($id_cdesa, $id_persil);
 		$data['persil'] = $this->data_persil_model->get_persil($id_persil);
 		$this->load->view('header', $header);
 		$this->load->view('nav',$nav);

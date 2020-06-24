@@ -156,7 +156,7 @@
 													</thead>
 													<tbody>
 														<?php $nomer = $paging->offset;?>
-														<?php foreach ($bidang as $key=>$item): $nomer++;?>
+														<?php foreach ($bidang as $key => $item): $nomer++;?>
 															<tr>
 																<td class="text-center"><?= $nomer?></td>
 																<td nowrap class="text-center">
