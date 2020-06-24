@@ -180,6 +180,11 @@ $(document).ready(function() {
 		return this.optional(element) || valid;
 	}, "Hanya boleh berisi karakter alpha, spasi, titik, koma, tanda petik dan strip");
 
+	jQuery.validator.addMethod("nama_terbatas", function(value, element) {
+		valid = /^[a-zA-Z0-9 \-]+$/i.test(value);
+		return this.optional(element) || valid;
+	}, "Hanya boleh berisi karakter alfanumerik, spasi dan strip");
+
 	jQuery.validator.addMethod("nomor_sk", function(value, element) {
 		valid = /^[a-zA-Z0-9 \.\-\/]+$/i.test(value);
 		return this.optional(element) || valid;
@@ -234,13 +239,6 @@ $(document).ready(function() {
 		valid = /^[0-9]+$/.test(value);
 		return this.optional(element) || valid;
 	}, "Hanya boleh berisi karakter numerik");
-
-	$('.bilangan').each(function() {
-		$(this).rules("add",
-			{
-				bilangan: true,
-			});
-	});
 
 	jQuery.validator.addMethod("alamat", function(value, element) {
 		valid = /^[a-zA-Z0-9 \.,\-\/]+$/.test(value);
