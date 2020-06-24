@@ -150,8 +150,23 @@
 										<input type="hidden" name="id_pend" value="<?= $pemilik["id"] ?>"/>
 										<input type="hidden" name="id_persil" value="<?= $persil["id"] ?>"/>
 
+
+
 										<div class="panel box box-default">
 
+											<?php if (empty($persil['cdesa_awal'])): ?>
+												<div id="bidang_persil" class="panel-collapse">
+													<div class="box-body">
+														<div class="form-group">
+															<div class="col-sm-8">
+																<input type="checkbox" id="checkbox" class="form-checkbox" onchange="cdesa_awal($(this).prop('checked'))"><strong> Catat C-Desa ini sebagai pemilik awal keseluruhan persil ini</strong>
+															</div>
+														</div>
+													</div>
+												</div>
+											<?php endif; ?>
+
+										<div id="mutasi">
 											<div class="box-header with-border">
 												<h4 class="box-title">
 													<a data-toggle="collapse" data-parent="#accordion" href="#persil">Mutasi - Bidang Tanah</a>
@@ -230,6 +245,12 @@
 																	<option value="<?= $data['nomor']?>" <?php selected($bidang['cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
 																<?php endforeach;?>
 															</select>
+															<label for="" class="col-sm-3 control-label"></label>
+															<div class="form-group">
+															<div class="col-sm-9">
+																<span class="help-block"><code>Jika C-Desa tidak ditemukan, bisa dibuat dan ditambahkan belakangan</code></span>
+															</div>
+															</div>
 														</div>
 													</div>
 													<div class="form-group">
@@ -240,6 +261,7 @@
 													</div>
 												</div>
 											</div>
+										</div>
 
 											<div class="box-footer">
 												<div class="col-xs-12">
@@ -304,6 +326,10 @@
 		});
 		pilih_lokasi(<?= empty($persil['lokasi']) ? 1 : 2?>);
 	});
+
+	function cdesa_awal(status){
+		alert(status);
+	}
 
 </script>
 

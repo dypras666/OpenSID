@@ -845,6 +845,12 @@ class Migrasi_2006_ke_2007 extends CI_model {
 				'path' => array(
 					'type' => 'TEXT',
 					'null' => TRUE
+				),
+				'cdesa_awal' => array(
+					'type' => 'INT',
+					'constraint' => 11,
+					'unsigned' => TRUE,
+					'null' => TRUE
 				)
 			);
 			$this->dbforge->add_key('id', TRUE);
