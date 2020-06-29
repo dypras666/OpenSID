@@ -3,13 +3,14 @@ class Migrasi_2006_ke_2007 extends CI_model {
 
 	public function up()
 	{
-	  // Sesuaikan dengan sql_mode STRICT_TRANS_TABLES
+		// Sesuaikan dengan sql_mode STRICT_TRANS_TABLES
 		$this->db->query("ALTER TABLE area MODIFY COLUMN id_cluster INT(11) NULL DEFAULT NULL");
 		$this->db->query("ALTER TABLE area MODIFY COLUMN foto VARCHAR(100) NULL DEFAULT NULL");
 		$this->db->query("ALTER TABLE area MODIFY COLUMN path TEXT NULL");
 		$this->data_apbdes_manual();
 		$this->konfigurasi_web();
 		$this->ubah_data_persil();
+		$this->konfigurasi_qrcode();
 	}
 
 	private function data_apbdes_manual()
@@ -570,6 +571,7 @@ class Migrasi_2006_ke_2007 extends CI_model {
 		$this->db->query($query);
 	}
 
+<<<<<<< HEAD
 	private function ubah_data_persil()
 	{
 		// Buat tabel baru
@@ -946,6 +948,17 @@ class Migrasi_2006_ke_2007 extends CI_model {
 	    	'CONSTRAINT `cdesa_mutasi_fk` FOREIGN KEY (`id_cdesa_masuk`) REFERENCES `cdesa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE'
 			));
 		}
+=======
+	private function konfigurasi_qrcode()
+	{
+		// Tambah menu Pengaturan -> Hasilkan QRCode
+		$query = "
+			INSERT INTO setting_modul (`id`, `modul`, `url`, `aktif`, `ikon`, `urut`, `level`, `hidden`, `ikon_kecil`, `parent`) VALUES
+			(212, 'QR Code', 'setting/qrcode/clear', 1, 'fa-qrcode', 6, 1, 0, 'fa-qrcode', 11)
+			ON DUPLICATE KEY UPDATE modul = VALUES(modul), url = VALUES(url), level = VALUES(level), parent = VALUES(parent), hidden = VALUES(hidden);
+		";
+		$this->db->query($query);
+>>>>>>> master
 	}
 
 }

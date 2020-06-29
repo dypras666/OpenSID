@@ -4,7 +4,7 @@ define("VERSION", '20.06-pasca');
 /* Untuk migrasi database. Simpan nilai ini di tabel migrasi untuk menandakan sudah migrasi ke versi ini.
    Versi database = [yyyymmdd][nomor urut dua digit]. Ubah setiap kali mengubah struktur database.
 */
-define('VERSI_DATABASE', '2020060102');
+define('VERSI_DATABASE', '2020060103');
 define("LOKASI_LOGO_DESA", 'desa/logo/');
 define("LOKASI_ARSIP", 'desa/arsip/');
 define("LOKASI_CONFIG_DESA", 'desa/config/');
@@ -23,6 +23,7 @@ define("LOKASI_PENGESAHAN", 'desa/upload/pengesahan/');
 define("LOKASI_WIDGET", 'desa/widgets/');
 define("LOKASI_GAMBAR_WIDGET", 'desa/upload/widgets/');
 define("LOKASI_KEUANGAN_ZIP", 'desa/upload/keuangan/');
+define("LOKASI_MEDIA", 'desa/upload/media/');
 
 // Kode laporan statistik di mana kode isian belum di isi
 define('BELUM_MENGISI', 777);
@@ -323,16 +324,17 @@ function favico_desa()
  * @access  public
  * @return  string
  */
-function gambar_desa($nama_file, $type = FALSE)
+function gambar_desa($nama_file, $type = FALSE, $file = FALSE)
 {
 	if (is_file(APPPATH .'../'. LOKASI_LOGO_DESA . $nama_file))
 	{
-		return $logo_desa = base_url() . LOKASI_LOGO_DESA . $nama_file;
+
+		return $logo_desa = ($file ? APPPATH.'../' : base_url()) . LOKASI_LOGO_DESA . $nama_file;
 	}
 
 	// type FALSE = logo, TRUE = kantor
 	$default = ($type)  ? 'opensid_kantor.jpg' : 'opensid_logo.png';
-	return $logo_desa = base_url("assets/files/logo/$default");
+	return $logo_desa = ($file ? APPPATH.'../' : base_url()). "assets/files/logo/$default";
 }
 
 /**
