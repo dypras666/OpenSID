@@ -339,6 +339,12 @@ class Cdesa extends Admin_Controller {
 		$this->load->view('data_persil/c_desa_form_print', $data);
 	}
 
+	public function awal_persil($id_cdesa, $id_persil)
+	{
+		$this->data_persil_model->awal_persil($id_cdesa, $id_persil);
+		redirect("cdesa/mutasi/$id_cdesa/$id_persil");
+	}
+
 }
 
 ?>

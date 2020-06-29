@@ -497,5 +497,12 @@ class Data_persil_model extends CI_Model {
 		}
 		return $hasil;
 	}
+
+	public function awal_persil($id_cdesa, $id_persil)
+	{
+		$this->db->where('id', $id_persil)
+			->set('cdesa_awal', $id_cdesa)
+			->update('persil');
+	}
 }
 ?>

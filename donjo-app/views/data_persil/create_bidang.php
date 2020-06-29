@@ -143,30 +143,27 @@
 									<div class="box-header with-border">
 										<h3 class="box-title">Tambah Mutasi</h3>
 									</div>
-									<form name='mainform' action="<?= site_url('cdesa/simpan_bidang/'.$cdesa['id'].'/'.$bidang['id'])?>" method="POST"  id="validasi" class="form-horizontal">
-										<input name="jenis_pemilik" type="hidden" value="1">
-										<input type="hidden" name="nik_lama" value="<?= $pemilik["nik_lama"] ?>"/>
-										<input type="hidden" name="nik" value="<?= $pemilik["nik"] ?>"/>
-										<input type="hidden" name="id_pend" value="<?= $pemilik["id"] ?>"/>
-										<input type="hidden" name="id_persil" value="<?= $persil["id"] ?>"/>
 
+									<?php if (empty($persil['cdesa_awal'])): ?>
+										<div class="box-body">
+											<a href="<?= site_url('cdesa/awal_persil/'. $cdesa[id] .'/' .$persil['id'])?>" class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-2" title="Kembali Ke Rincian C-Desa"><i class="fa fa-step-backward"></i>C-Desa Awal</a>
+											<span style="padding-left: 10px;">Catat C-Desa ini sebagai pemilik awal keseluruhan persil <?= $persil["nomor"] ?></span>
+										</div>
+										<div class="box-body">
+											<a class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-2" title="Kembali Ke Rincian C-Desa"><i class="fa fa-plus"></i>Tambah Mutasi</a>
+											<span style="padding-left: 10px;">Tambah mutasi C-Desa <?= $cdesa['nomor']?> untuk persil <?= $persil['nomor']?></span>
+										</div>
+									<?php endif; ?>
 
+									<div id="mutasi_persil" <?php empty($persil['cdesa_awal']) and print('style="display: none;"')?>>
 
-										<div class="panel box box-default">
+										<form name='mainform' action="<?= site_url('cdesa/simpan_bidang/'.$cdesa['id'].'/'.$bidang['id'])?>" method="POST"  id="validasi" class="form-horizontal">
+											<input name="jenis_pemilik" type="hidden" value="1">
+											<input type="hidden" name="nik_lama" value="<?= $pemilik["nik_lama"] ?>"/>
+											<input type="hidden" name="nik" value="<?= $pemilik["nik"] ?>"/>
+											<input type="hidden" name="id_pend" value="<?= $pemilik["id"] ?>"/>
+											<input type="hidden" name="id_persil" value="<?= $persil["id"] ?>"/>
 
-											<?php if (empty($persil['cdesa_awal'])): ?>
-												<div id="bidang_persil" class="panel-collapse">
-													<div class="box-body">
-														<div class="form-group">
-															<div class="col-sm-8">
-																<input type="checkbox" id="checkbox" class="form-checkbox" onchange="cdesa_awal($(this).prop('checked'))"><strong> Catat C-Desa ini sebagai pemilik awal keseluruhan persil ini</strong>
-															</div>
-														</div>
-													</div>
-												</div>
-											<?php endif; ?>
-
-										<div id="mutasi">
 											<div class="box-header with-border">
 												<h4 class="box-title">
 													<a data-toggle="collapse" data-parent="#accordion" href="#persil">Mutasi - Bidang Tanah</a>
@@ -261,7 +258,6 @@
 													</div>
 												</div>
 											</div>
-										</div>
 
 											<div class="box-footer">
 												<div class="col-xs-12">
@@ -270,8 +266,8 @@
 												</div>
 											</div>
 
-										</div>
-									</form>
+										</form>
+									</div>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -279,8 +275,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
+	</section>
 </div>
 <script>
 	function pilih_lokasi(pilih)
@@ -326,10 +321,6 @@
 		});
 		pilih_lokasi(<?= empty($persil['lokasi']) ? 1 : 2?>);
 	});
-
-	function cdesa_awal(status){
-		alert(status);
-	}
 
 </script>
 
