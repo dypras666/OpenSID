@@ -571,7 +571,6 @@ class Migrasi_2006_ke_2007 extends CI_model {
 		$this->db->query($query);
 	}
 
-<<<<<<< HEAD
 	private function ubah_data_persil()
 	{
 		// Buat tabel baru
@@ -948,7 +947,7 @@ class Migrasi_2006_ke_2007 extends CI_model {
 	    	'CONSTRAINT `cdesa_mutasi_fk` FOREIGN KEY (`id_cdesa_masuk`) REFERENCES `cdesa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE'
 			));
 		}
-=======
+
 	private function konfigurasi_qrcode()
 	{
 		// Tambah menu Pengaturan -> Hasilkan QRCode
@@ -958,7 +957,6 @@ class Migrasi_2006_ke_2007 extends CI_model {
 			ON DUPLICATE KEY UPDATE modul = VALUES(modul), url = VALUES(url), level = VALUES(level), parent = VALUES(parent), hidden = VALUES(hidden);
 		";
 		$this->db->query($query);
->>>>>>> master
 	}
 
 }
