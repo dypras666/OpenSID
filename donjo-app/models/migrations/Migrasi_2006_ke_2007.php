@@ -947,6 +947,7 @@ class Migrasi_2006_ke_2007 extends CI_model {
 	    	'CONSTRAINT `cdesa_mutasi_fk` FOREIGN KEY (`id_cdesa_masuk`) REFERENCES `cdesa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE'
 			));
 		}
+	}
 
 	private function konfigurasi_qrcode()
 	{
