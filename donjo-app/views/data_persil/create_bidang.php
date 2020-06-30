@@ -144,18 +144,20 @@
 										<h3 class="box-title">Tambah Mutasi</h3>
 									</div>
 
-									<?php if (empty($persil['cdesa_awal'])): ?>
-										<div class="box-body">
-											<a href="<?= site_url('cdesa/awal_persil/'. $cdesa[id] .'/' .$persil['id'])?>" class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-2" title="Kembali Ke Rincian C-Desa"><i class="fa fa-step-backward"></i>C-Desa Awal</a>
-											<span style="padding-left: 10px;">Catat C-Desa ini sebagai pemilik awal keseluruhan persil <?= $persil["nomor"] ?></span>
-										</div>
-										<div class="box-body">
-											<a class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-2" title="Kembali Ke Rincian C-Desa"><i class="fa fa-plus"></i>Tambah Mutasi</a>
-											<span style="padding-left: 10px;">Tambah mutasi C-Desa <?= $cdesa['nomor']?> untuk persil <?= $persil['nomor']?></span>
+									<?php if (empty($persil['cdesa_awal']) and empty($bidang)): ?>
+										<div id="cdesa_awal">
+											<div class="box-body">
+												<a href="<?= site_url('cdesa/awal_persil/'. $cdesa[id] .'/' .$persil['id'])?>" class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-2" title="Kembali Ke Rincian C-Desa"><i class="fa fa-step-backward"></i>C-Desa Awal</a>
+												<span style="padding-left: 10px;">Catat C-Desa ini sebagai pemilik awal keseluruhan persil <?= $persil["nomor"] ?></span>
+											</div>
+											<div class="box-body">
+												<a class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-2" title="Kembali Ke Rincian C-Desa" onclick="tambah_mutasi();"><i class="fa fa-plus"></i>Tambah Mutasi</a>
+												<span style="padding-left: 10px;">Tambah mutasi C-Desa <?= $cdesa['nomor']?> untuk persil <?= $persil['nomor']?></span>
+											</div>
 										</div>
 									<?php endif; ?>
 
-									<div id="mutasi_persil" <?php empty($persil['cdesa_awal']) and print('style="display: none;"')?>>
+									<div id="mutasi_persil" <?php empty($persil['cdesa_awal']) and empty($bidang) and print('style="display: none;"')?>>
 
 										<form name='mainform' action="<?= site_url('cdesa/simpan_bidang/'.$cdesa['id'].'/'.$bidang['id'])?>" method="POST"  id="validasi" class="form-horizontal">
 											<input name="jenis_pemilik" type="hidden" value="1">
@@ -236,7 +238,7 @@
 													<div class="form-group">
 														<label for="cdesa_keluar" class="col-sm-3 control-label">Perolehan Dari</label>
 														<div class="col-sm-9">
-															<select class="form-control select2 input-sm" name="cdesa_keluar">
+															<select class="form-control select2 input-sm" id="cdesa_keluar" name="cdesa_keluar">
 																<option value='' selected="selected">-- Pilih C-DESA dari mana bidang persil ini dimutasikan --</option>
 																<?php foreach ($list_cdesa as $data): ?>
 																	<option value="<?= $data['nomor']?>" <?php selected($bidang['cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
@@ -321,6 +323,12 @@
 		});
 		pilih_lokasi(<?= empty($persil['lokasi']) ? 1 : 2?>);
 	});
+
+	function tambah_mutasi() {
+		$('#cdesa_awal').hide();
+		$('#mutasi_persil').show();
+		$('#cdesa_keluar').select2(); // Untuk refresh tampilan
+	}
 
 </script>
 
