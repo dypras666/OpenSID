@@ -40,14 +40,13 @@ class Cdesa_model extends CI_Model {
 				->or_like('c.nama_pemilik_luar', $cari)
 				->or_like('c.nama_kepemilikan', $cari)
 				->or_like('c.nomor', $cari);
-			}
 		}
+	}
 
 	private function main_sql_c_desa()
 	{
 		$this->db->from('cdesa c')
-			->join('mutasi_cdesa m', 'm.id_cdesa_masuk = c.id', 'left')
-			->join('mutasi_cdesa keluar', 'keluar.cdesa_keluar = c.nomor', 'left')
+			->join('mutasi_cdesa m', 'm.id_cdesa_masuk = c.id or m.cdesa_keluar = c.id', 'left')
 			->join('persil p', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
 			->join('cdesa_penduduk cu', 'cu.id_cdesa = c.id', 'left')
@@ -60,7 +59,7 @@ class Cdesa_model extends CI_Model {
 	{
 		$this->main_sql_c_desa();
 		$jml_data = $this->db
-			->select('COUNT(c.id) AS jml')
+			->select('COUNT(DISTINCT c.id) AS jml')
 			->get()
 			->row()
 			->jml;
@@ -74,20 +73,22 @@ class Cdesa_model extends CI_Model {
 		return $this->paging;
 	}
 
-	public function list_c_desa($offset, $per_page)
+	public function list_c_desa($offset=0, $per_page='')
 	{
 		$data = [];
 		$this->main_sql_c_desa();
 		$this->db
-			->select('c.*, c.id as id_cdesa, c.created_at as tanggal_daftar, m.id_cdesa_masuk, cu.id_pend')
+			->select('c.*, c.id as id_cdesa, c.created_at as tanggal_daftar, cu.id_pend')
 			->select('u.nik AS nik, u.nama as namapemilik, w.*')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
-			->select('COUNT(m.id) + COUNT(keluar.id) AS jumlah')
-			->select("SUM(CASE WHEN k.tipe = 'BASAH' THEN m.luas ELSE 0 END) as basah")
-			->select("SUM(CASE WHEN k.tipe = 'KERING' THEN m.luas ELSE 0 END) as kering")
-			->group_by('c.id, cu.id')
-			->limit($per_page, $offset);
+			->select('COUNT(m.id) AS jumlah')
+			->select("SUM(CASE WHEN k.tipe = 'BASAH' AND m.id_cdesa_masuk = c.id THEN m.luas ELSE 0 END) as basah_masuk")
+			->select("SUM(CASE WHEN k.tipe = 'KERING' AND m.id_cdesa_masuk = c.id THEN m.luas ELSE 0 END) as kering_masuk")
+			->select("SUM(CASE WHEN k.tipe = 'BASAH' AND m.cdesa_keluar = c.id THEN m.luas ELSE 0 END) as basah_keluar")
+			->select("SUM(CASE WHEN k.tipe = 'KERING' AND m.cdesa_keluar = c.id THEN m.luas ELSE 0 END) as kering_keluar")
+			->group_by('c.id, cu.id');
+		if ($per_page) $this->db->limit($per_page, $offset);
 		$data = $this->db
 			->get()
 			->result_array();
@@ -96,10 +97,33 @@ class Cdesa_model extends CI_Model {
 		for ($i=0; $i<count($data); $i++)
 		{
 			$data[$i]['no'] = $j + 1;
+			$data[$i]['basah'] = $data[$i]['basah_masuk'] - $data[$i]['basah_keluar'];
+			$data[$i]['kering'] = $data[$i]['kering_masuk'] - $data[$i]['kering_keluar'];
 			$j++;
 		}
-
 		return $data;
+	}
+
+	// Untuk cetak daftar C-Desa, menghitung jumlah luas per kelas persil
+ 	// Perhitungkan kasus suatu C-Desa adalah pemilik awal keseluruhan persil
+	public function jumlah_luas()
+	{
+		$list_cdesa = $this->list_c_desa();
+		foreach ($list_cdesa as $key => $cdesa)
+		{
+			$list_persil_awal = $this->db
+				->select("SUM(CASE WHEN k.tipe = 'BASAH' THEN p.luas_persil ELSE 0 END) as basah_seluruh_persil")
+				->select("SUM(CASE WHEN k.tipe = 'KERING' THEN p.luas_persil ELSE 0 END) as kering_seluruh_persil")
+				->where('p.cdesa_awal', $cdesa['id_cdesa'])
+				->from('persil p')
+				->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
+				->group_by('p.id')
+				->get()
+				->row_array();
+			$list_cdesa[$key]['basah'] += $list_persil_awal['basah_seluruh_persil'];
+			$list_cdesa[$key]['kering'] += $list_persil_awal['kering_seluruh_persil'];
+		}
+		return $list_cdesa;
 	}
 
 	public function get_persil($id_bidang)

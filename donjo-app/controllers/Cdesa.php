@@ -326,13 +326,13 @@ class Cdesa extends Admin_Controller {
 
 	public function cetak($o=0)
 	{
-		$data['data_cdesa'] = $this->cdesa_model->list_c_desa('', $o, 0, 10000);
+		$data['data_cdesa'] = $this->cdesa_model->jumlah_luas();
 		$this->load->view('data_persil/c_desa_cetak', $data);
 	}
 
 	public function unduh($o=0)
 	{
-		$data['data_cdesa'] = $this->cdesa_model->list_c_desa('', $o, 0, 10000);
+		$data['data_cdesa'] = $this->cdesa_model->jumlah_luas();
 		$this->load->view('data_persil/c_desa_unduh', $data);
 	}
 
