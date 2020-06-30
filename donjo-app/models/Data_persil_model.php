@@ -498,10 +498,11 @@ class Data_persil_model extends CI_Model {
 		return $hasil;
 	}
 
-	public function awal_persil($id_cdesa, $id_persil)
+	public function awal_persil($cdesa_awal, $id_persil)
 	{
+		$cdesa_awal = $cdesa_awal ?: null; // Kosongkan pemilik awal persil ini
 		$this->db->where('id', $id_persil)
-			->set('cdesa_awal', $id_cdesa)
+			->set('cdesa_awal', $cdesa_awal)
 			->update('persil');
 	}
 }

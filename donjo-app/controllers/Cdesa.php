@@ -249,7 +249,7 @@ class Cdesa extends Admin_Controller {
 	public function simpan_bidang($id_cdesa, $id_bidang='')
 	{
 		$data = $this->cdesa_model->simpan_mutasi($id_cdesa, $id_bidang, $this->input->post());
-		if ($id_bidang)
+		if ($data['id_persil'])
 			redirect("cdesa/mutasi/$id_cdesa/$data[id_persil]");
 		else
 			redirect("cdesa/rincian/$id_cdesa");
@@ -257,9 +257,13 @@ class Cdesa extends Admin_Controller {
 
 	public function hapus_bidang($cdesa, $id_bidang)
 	{
+		$id_persil = $this->db->select('id_persil')
+			->where('id', $id_bidang)
+			->get('mutasi_cdesa')
+			->row()->id_persil;
 		$this->db->where('id', $id_bidang)
 			->delete('mutasi_cdesa');
-		redirect("cdesa/rincian/$cdesa");
+		redirect("cdesa/mutasi/$cdesa/$id_persil");
 	}
 
 	public function cek_nomor($nomor)
@@ -339,9 +343,10 @@ class Cdesa extends Admin_Controller {
 		$this->load->view('data_persil/c_desa_form_print', $data);
 	}
 
-	public function awal_persil($id_cdesa, $id_persil)
+	public function awal_persil($id_cdesa, $id_persil, $hapus=false)
 	{
-		$this->data_persil_model->awal_persil($id_cdesa, $id_persil);
+		$cdesa_awal = $hapus ? null : $id_cdesa;
+		$this->data_persil_model->awal_persil($cdesa_awal, $id_persil);
 		redirect("cdesa/mutasi/$id_cdesa/$id_persil");
 	}
 

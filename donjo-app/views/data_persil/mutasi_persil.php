@@ -117,8 +117,13 @@
 													</tbody>
 												</table>
 											</div>
+											<?php if ($persil['cdesa_awal'] == $cdesa['id']): ?>
+												<div class="box-body">
+													<span style="padding-right: 10px;">C-Desa ini adalah pemilik awal keseluruhan persil <?= $persil["nomor"] ?>. Kalau bukan, klik tombol berikut. </span>
+													<a href="<?= site_url('cdesa/awal_persil/'.$cdesa['id'].'/' .$persil['id'].'/1')?>" class="btn btn-social btn-flat btn-danger btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Rincian C-Desa"><i class="fa fa-step-backward"></i>Bukan C-Desa Awal</a>
+												</div>
+											<?php endif; ?>
 										</div>
-
 
 										<div class="col-sm-12">
 											<div class="row">
@@ -138,7 +143,6 @@
 											</div>
 										</div>
 										<div class="col-sm-12">
-										<?php $peserta = $program[1];?>
 											<div class="table-responsive">
 												<table class="table table-bordered table-striped dataTable table-hover">
 													<thead class="bg-gray disabled color-palette">
@@ -181,7 +185,7 @@
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="dataTables_length">
-                        <form id="paging" action="<?= site_url("program_bantuan/detail/1/$detail[id]")?>" method="post" class="form-horizontal">
+                        <form id="paging" action="<?= site_url("cdesa/mutasi/$cdesa[id]/$persil[id]")?>" method="post" class="form-horizontal">
                          <label>
                             Tampilkan
                             <select name="per_page" class="form-control input-sm" onchange="$('#mainform').submit();" id="per_page_input">
