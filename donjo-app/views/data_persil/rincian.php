@@ -27,6 +27,7 @@
 		min-height:275px;
 	}
 	.padat {width: 1%;}
+	th.horizontal {width: 20%;}
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
@@ -65,23 +66,23 @@
 												<table class="table table-bordered  table-striped table-hover" >
 													<tbody>
 														<tr>
-															<td nowrap>Nama Pemilik</td>
+															<th class="horizontal">Nama Pemilik</td>
 															<td> : <?= $pemilik["namapemilik"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>NIK</td>
+															<th class="horizontal">NIK</td>
 															<td> :  <?= $pemilik["nik"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>Alamat</td>
+															<th class="horizontal">Alamat</td>
 															<td> :  <?= $pemilik["alamat"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>Nomor C-DESA</td>
+															<th class="horizontal">Nomor C-DESA</td>
 															<td> : <?= $cdesa['nomor']?></td>
 														</tr>
 														<tr>
-															<td nowrap>Nama Kepemilikan</td>
+															<th class="horizontal">Nama Kepemilikan</td>
 															<td> : <?= $cdesa["nama_kepemilikan"]?></td>
 														</tr>
 													</tbody>

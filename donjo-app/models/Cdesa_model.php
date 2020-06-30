@@ -261,8 +261,8 @@ class Cdesa_model extends CI_Model {
 		$this->db
 			->select('m.*, p.nomor, rk.kode as kelas_tanah, dp.nama as peruntukan, dj.nama as jenis_persil')
 			->select('CONCAT("RT ", rt, " / RW ", rw, " - ", dusun) as lokasi, p.lokasi as alamat')
-			->select("IF (m.id_cdesa_masuk = {$id_cdesa} and m.cdesa_keluar IS NULL, m.luas, '') AS luas_masuk")
-			->select("IF (m.cdesa_keluar IS NOT NULL, m.luas, '') AS luas_keluar")
+			->select("IF (m.id_cdesa_masuk = {$id_cdesa}, m.luas, '') AS luas_masuk")
+			->select("IF (m.cdesa_keluar = {$id_cdesa}, m.luas, '') AS luas_keluar")
 			->from('mutasi_cdesa m')
 			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
 			->join('persil p', 'p.id = m.id_persil', 'left')
@@ -272,7 +272,7 @@ class Cdesa_model extends CI_Model {
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
 			->group_start()
 				->where('m.id_cdesa_masuk', $id_cdesa)
-				->or_where('m.cdesa_keluar', $nomor_cdesa)
+				->or_where('m.cdesa_keluar', $id_cdesa)
 			->group_end()
 			->order_by('tanggal_mutasi');
 		if ($id_persil)
@@ -296,8 +296,10 @@ class Cdesa_model extends CI_Model {
 			->join('persil p', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
-			->where('m.id_cdesa_masuk', $id_cdesa)
-			->or_where('m.cdesa_keluar', $nomor_cdesa)
+			->group_start()
+				->where('m.id_cdesa_masuk', $id_cdesa)
+				->or_where('m.cdesa_keluar', $id_cdesa)
+			->group_end()
 			->group_by('p.id');
 		$data = $this->db->get()->result_array();
 		return $data;

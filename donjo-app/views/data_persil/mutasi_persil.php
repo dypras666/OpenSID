@@ -27,7 +27,8 @@
 		min-height:275px;
 	}
 	.padat {width: 1%;}
-	}
+	th.horizontal {width: 20%}
+
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
@@ -67,23 +68,23 @@
 												<table class="table table-bordered table-striped table-hover" >
 													<tbody>
 														<tr>
-															<td nowrap>Nama Pemilik</td>
+															<th class="horizontal">Nama Pemilik</td>
 															<td> : <?= $pemilik["namapemilik"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>NIK</td>
-															<td> :  <?= $pemilik["nik"]?></td>
+															<th>NIK</td>
+															<td class="horizontal"> :  <?= $pemilik["nik"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>Alamat</td>
+															<th class="horizontal">Alamat</td>
 															<td> :  <?= $pemilik["alamat"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>Nomor C-DESA</td>
+															<th class="horizontal">Nomor C-DESA</td>
 															<td> : <?= $cdesa['nomor']?></td>
 														</tr>
 														<tr>
-															<td nowrap>Nama Pemilik Tertulis di C-Desa</td>
+															<th class="horizontal">Nama Pemilik Tertulis di C-Desa</td>
 															<td> : <?= $cdesa["nama_kepemilikan"]?></td>
 														</tr>
 													</tbody>
@@ -99,19 +100,19 @@
 												<table class="table table-bordered table-striped table-hover" >
 													<tbody>
 														<tr>
-															<td nowrap>Nomor Persil</td>
+															<th class="horizontal">Nomor Persil</td>
 															<td> : <?= $persil['nomor']?></td>
 														</tr>
 														<tr>
-															<td nowrap>Kelas Tanah</td>
+															<th class="horizontal">Kelas Tanah</td>
 															<td> :  <?= $persil["kode"].' - '.$persil["ndesc"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>Luas Keseluruhan (M2)</td>
+															<th class="horizontal">Luas Keseluruhan (M2)</td>
 															<td> :  <?= $persil["luas_persil"]?></td>
 														</tr>
 														<tr>
-															<td nowrap>Lokasi</td>
+															<th class="horizontal">Lokasi</td>
 															<td> :  <?= $persil["alamat"] ?: $persil["lokasi"]?></td>
 														</tr>
 													</tbody>
@@ -164,12 +165,20 @@
 															<tr>
 																<td class="text-center"><?= $nomer?></td>
 																<td nowrap class="text-center">
-																	<a href="<?= site_url("cdesa/create_bidang/$cdesa[id]/$item[id_persil]/$item[id]")?>" class="btn bg-orange btn-flat btn-sm" title="Ubah"><i class="fa fa-edit"></i></a>
+																	<a href="<?= site_url("cdesa/create_bidang/$item[id_cdesa_masuk]/$item[id_persil]/$item[id]")?>" class="btn bg-orange btn-flat btn-sm" title="Ubah"><i class="fa fa-edit"></i></a>
 																	<a href="#" data-href="<?= site_url("cdesa/hapus_bidang/$cdesa[id]/$item[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																</td>
 																<td><?= $item['no_bidang_persil']?></td>
-																<td><?= $item['luas_masuk']?></td>
-																<td><?= $item['luas_keluar']?></td>
+																<td><?= $item['luas_masuk']?>
+																	<?php if ($item['cdesa_keluar'] and $item['id_cdesa_masuk'] == $cdesa['id']): ?>
+																		dari <a href="<?= site_url("cdesa/mutasi/$item[cdesa_keluar]/$item[id_persil]")?>">C-Desa ini</a>
+																	<?php endif; ?>
+																</td>
+																<td><?= $item['luas_keluar']?>
+																	<?php if ($item['id_cdesa_masuk'] <> $cdesa['id']): ?>
+																		ke <a href="<?= site_url("cdesa/mutasi/$item[id_cdesa_masuk]/$item[id_persil]")?>">C-Desa ini</a>
+																	<?php endif; ?>
+																</td>
 																<td><?= $item['no_objek_pajak']?></td>
 																<td><?= $item['no_sppt_pbb']?></td>
 																<td><?= tgl_indo_out($item['tanggal_mutasi'])?></td>

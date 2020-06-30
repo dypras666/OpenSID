@@ -114,7 +114,7 @@
 															<tr>
 																<td class="text-center"><?= $nomer?></td>
 																<td><a href="<?= site_url("cdesa/rincian/".$item["id_cdesa_masuk"])?>"><?= $item['cdesa_masuk']?></a></td>
-																<td><a href="<?= site_url("cdesa/rincian/".$item["id_cdesa_keluar"])?>"><?= $item['cdesa_keluar']?></a></td>
+																<td><a href="<?= site_url("cdesa/rincian/".$item["cdesa_keluar"])?>"><?= $item['cdesa_keluar']?></a></td>
 																<td><?= $item['no_bidang_persil']?></td>
 																<td><?= $item['luas']?></td>
 																<td><?= $item['no_objek_pajak']?></td>

@@ -28,33 +28,28 @@
 								<div class="box-header with-border">
 									<h3 class="box-title">Rincian C-Desa</h3>
 								</div>
-								<?php if ($pemilik): ?>
-									<div class="form-group">
-										<label for="nama" class="col-sm-3 control-label">Pemilik 1</label>
-										<div class="col-sm-9">
-											<div class="form-group">
-												<label class="col-sm-3 control-label">Nama Penduduk</label>
-												<div class="col-sm-8">
-													<input  class="form-control input-sm" type="text" placeholder="Nama Pemilik" value="<?= $pemilik["nama"] ?>" disabled >
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label">NIK Pemilik</label>
-												<div class="col-sm-8">
-													<input  class="form-control input-sm" type="text" placeholder="NIK Pemilik" value="<?= $pemilik["nik"] ?>" disabled >
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="alamat"  class="col-sm-3 control-label">Alamat Pemilik</label>
-												<div class="col-sm-8">
-													<textarea  class="form-control input-sm" placeholder="Alamat Pemilik" disabled><?= "RT ".$pemilik["rt"]." / RT ".$pemilik["rw"]." - ".strtoupper($pemilik["dusun"]) ?></textarea>
-												</div>
+								<div class="box-body">
+									<?php if ($pemilik): ?>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">Nama Pemilik</label>
+											<div class="col-sm-8">
+												<input  class="form-control input-sm" type="text" placeholder="Nama Pemilik" value="<?= $pemilik["nama"] ?>" disabled >
 											</div>
 										</div>
-									</div>
-								<?php endif; ?>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">NIK Pemilik</label>
+											<div class="col-sm-8">
+												<input  class="form-control input-sm" type="text" placeholder="NIK Pemilik" value="<?= $pemilik["nik"] ?>" disabled >
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="alamat"  class="col-sm-3 control-label">Alamat Pemilik</label>
+											<div class="col-sm-8">
+												<textarea  class="form-control input-sm" placeholder="Alamat Pemilik" disabled><?= "RT ".$pemilik["rt"]." / RT ".$pemilik["rw"]." - ".strtoupper($pemilik["dusun"]) ?></textarea>
+											</div>
+										</div>
+									<?php endif; ?>
 
-								<div class="box-body">
 									<div class="form-group">
 										<label for="c_desa" class="col-sm-3 control-label">Nomor C-DESA</label>
 										<div class="col-sm-8">
@@ -241,7 +236,7 @@
 															<select class="form-control select2 input-sm" id="cdesa_keluar" name="cdesa_keluar">
 																<option value='' selected="selected">-- Pilih C-DESA dari mana bidang persil ini dimutasikan --</option>
 																<?php foreach ($list_cdesa as $data): ?>
-																	<option value="<?= $data['nomor']?>" <?php selected($bidang['cdesa_keluar'], $data['nomor']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
+																	<option value="<?= $data['id_cdesa']?>" <?php selected($bidang['cdesa_keluar'], $data['id_cdesa']); ?>> <?= $data['nomor']." - ".$data['namapemilik']?></option>
 																<?php endforeach;?>
 															</select>
 															<label for="" class="col-sm-3 control-label"></label>

@@ -1,6 +1,6 @@
 <div class="box box-info">
 	<div class="box-header with-border">
-		<h3 class="box-title">Menu Pendataan Persil</h3>
+		<h3 class="box-title">Menu Pendataan C-Desa</h3>
 		<div class="box-tools">
 			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 		</div>
@@ -15,7 +15,7 @@
 		</ul>
 	</div>
 </div>
-<div class="box box-info">
+<!-- <div class="box box-info">
 	<div class="box-header with-border">
 		<h3 class="box-title">Jenis Tanah</h3>
 		<div class="box-tools">
@@ -49,4 +49,4 @@
 		<?php endif; ?>
 		<li <?php if ($this->tab_ini == 30): ?>class="active"<?php endif; ?>><a href="<?= site_url('data_persil/persil_peruntukan')?>"><i class='fa fa-plus'></i> Tambah Data Peruntukan</a></li>
 	</div>
-</div>
+</div> -->
