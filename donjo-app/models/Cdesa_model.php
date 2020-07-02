@@ -83,10 +83,6 @@ class Cdesa_model extends CI_Model {
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN u.nama ELSE c.nama_pemilik_luar END) AS namapemilik')
 			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
 			->select('COUNT(m.id) AS jumlah')
-			->select("SUM(CASE WHEN k.tipe = 'BASAH' AND m.id_cdesa_masuk = c.id THEN m.luas ELSE 0 END) as basah_masuk")
-			->select("SUM(CASE WHEN k.tipe = 'KERING' AND m.id_cdesa_masuk = c.id THEN m.luas ELSE 0 END) as kering_masuk")
-			->select("SUM(CASE WHEN k.tipe = 'BASAH' AND m.cdesa_keluar = c.id THEN m.luas ELSE 0 END) as basah_keluar")
-			->select("SUM(CASE WHEN k.tipe = 'KERING' AND m.cdesa_keluar = c.id THEN m.luas ELSE 0 END) as kering_keluar")
 			->group_by('c.id, cu.id');
 		if ($per_page) $this->db->limit($per_page, $offset);
 		$data = $this->db
@@ -97,8 +93,9 @@ class Cdesa_model extends CI_Model {
 		for ($i=0; $i<count($data); $i++)
 		{
 			$data[$i]['no'] = $j + 1;
-			$data[$i]['basah'] = $data[$i]['basah_masuk'] - $data[$i]['basah_keluar'];
-			$data[$i]['kering'] = $data[$i]['kering_masuk'] - $data[$i]['kering_keluar'];
+			$luas_persil = $this->jumlah_luas($data[$i]['id_cdesa']);
+			$data[$i]['basah'] = $luas_persil['BASAH'];
+			$data[$i]['kering'] = $luas_persil['KERING'];
 			$j++;
 		}
 		return $data;
@@ -106,24 +103,49 @@ class Cdesa_model extends CI_Model {
 
 	// Untuk cetak daftar C-Desa, menghitung jumlah luas per kelas persil
  	// Perhitungkan kasus suatu C-Desa adalah pemilik awal keseluruhan persil
-	public function jumlah_luas()
+	public function jumlah_luas($id_cdesa)
 	{
-		$list_cdesa = $this->list_c_desa();
-		foreach ($list_cdesa as $key => $cdesa)
+		// luas total = jumlah luas setiap persil untuk cdesa
+		// luas persil = luas keseluruhan persil (kalau pemilik awal) +/- luas setiap mutasi tergantung masuk atau keluar
+		// Jumlahkan sesuai dengan tipe kelas persil (basah atau kering)
+		$persil_awal = $this->db
+			->select('p.id, luas_persil, k.tipe')
+			->from('persil p')
+			->join('ref_persil_kelas k', 'p.kelas = k.id')
+			->where('cdesa_awal', $id_cdesa)
+			->get()
+			->result_array();
+		$luas_persil = [];
+		foreach ($persil_awal as $persil)
 		{
-			$list_persil_awal = $this->db
-				->select("SUM(CASE WHEN k.tipe = 'BASAH' THEN p.luas_persil ELSE 0 END) as basah_seluruh_persil")
-				->select("SUM(CASE WHEN k.tipe = 'KERING' THEN p.luas_persil ELSE 0 END) as kering_seluruh_persil")
-				->where('p.cdesa_awal', $cdesa['id_cdesa'])
-				->from('persil p')
-				->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
-				->group_by('p.id')
-				->get()
-				->row_array();
-			$list_cdesa[$key]['basah'] += $list_persil_awal['basah_seluruh_persil'];
-			$list_cdesa[$key]['kering'] += $list_persil_awal['kering_seluruh_persil'];
+			$luas_persil[$persil['tipe']][$persil['id']] = $persil['luas_persil'];
 		}
-		return $list_cdesa;
+		$list_mutasi = $this->db
+			->select('m.id_persil, m.luas, m.cdesa_keluar, k.tipe')
+			->from('mutasi_cdesa m')
+			->join('persil p', 'p.id = m.id_persil')
+			->join('ref_persil_kelas k', 'p.kelas = k.id')
+			->where('m.id_cdesa_masuk', $id_cdesa)
+			->or_where('m.cdesa_keluar', $id_cdesa)
+			->get('')
+			->result_array();
+		foreach ($list_mutasi as $mutasi)
+		{
+			if ($mutasi['cdesa_keluar'] == $id_cdesa)
+			{
+				$luas_persil[$mutasi['tipe']][$mutasi['id_persil']] -= $mutasi['luas'];
+			}
+			else
+			{
+				$luas_persil[$mutasi['tipe']][$mutasi['id_persil']] += $mutasi['luas'];
+			}
+		}
+		$luas_total = [];
+		foreach ($luas_persil as $key => $luas)
+		{
+			$luas_total[$key] += array_sum($luas);
+		}
+		return $luas_total;
 	}
 
 	public function get_persil($id_bidang)
