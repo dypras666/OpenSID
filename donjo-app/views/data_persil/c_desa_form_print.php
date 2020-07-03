@@ -89,7 +89,7 @@
 							<td class="info">
 								<p>Keterangan:<br />
 									Setiap ada perubahan status tanah karena :<br />
-									&nbsp;1. JUal Beli<br />
+									&nbsp;1. Jual Beli<br />
 									&nbsp;2. Waris<br />
 									&nbsp;3. Hibah / Lintri<br />
 									Salinan Letter C ini Wajib dibawa Ke kantor Desa oleh<br />

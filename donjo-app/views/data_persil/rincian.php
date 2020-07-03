@@ -79,7 +79,7 @@
 															</tr>
 															<tr>
 																<th class="horizontal">Nomor C-DESA</td>
-																<td> : <?= $cdesa['nomor']?></td>
+																<td> : <?= sprintf("%04s", $cdesa['nomor'])?></td>
 															</tr>
 															<tr>
 																<th class="horizontal">Nama Kepemilikan</td>

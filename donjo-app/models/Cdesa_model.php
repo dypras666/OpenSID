@@ -400,28 +400,36 @@ class Cdesa_model extends CI_Model {
 	public function get_cetak_bidang($id_cdesa, $tipe='')
 	{
 		$this->db
-			->select('m.*, p.nomor as nopersil, rk.kode as kelas_tanah')
+			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.nomor as nopersil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
 			->from('mutasi_cdesa m')
 			->join('persil p', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
-			->where('m.id_cdesa_masuk', $id_cdesa)
-			->where('rk.tipe', $tipe);
+			->join('ref_persil_mutasi rm', 'm.jenis_mutasi = rm.id', 'left')
+			->join('cdesa cm', 'cm.id = m.id_cdesa_masuk', 'left')
+			->join('cdesa ck', 'ck.id = m.cdesa_keluar', 'left')
+			->group_start()
+				->where('m.id_cdesa_masuk', $id_cdesa)
+				->or_where('m.cdesa_keluar', $id_cdesa)
+			->group_end()
+			->where('rk.tipe', $tipe)
+			->order_by('p.nomor, m.tanggal_mutasi');
 		$data = $this->db->get()->result_array();
-		foreach ($data as $key => $item)
+		foreach ($data as $key => $mutasi)
 		{
-			$data[$key]['mutasi'] = $this->format_mutasi($item);
+			$data[$key]['mutasi'] = $this->format_mutasi($id_cdesa, $mutasi);
 		}
 		return $data;
 	}
 
-	private function format_mutasi($mutasi)
+	private function format_mutasi($id_cdesa, $mutasi)
 	{
-		if($mutasi)
+		if ($mutasi)
 		{
-			$div = ($mutasi['jenis_mutasi'] == 2)? 'class="out"':null;
+			$keluar = $mutasi['id_cdesa_keluar'] == $id_cdesa;
+			$div = $keluar ? 'class="out"' : null;
 			$hasil = "<p $div>";
 			$hasil .= $mutasi['sebabmutasi'];
-			$hasil .= !empty($mutasi['no_c_desa']) ? " ".ket_mutasi_persil($mutasi['jenis_mutasi'])." C No ".sprintf("%04s",$mutasi['no_c_desa']): null;
+			$hasil .= $keluar ? ' ke C No '.str_pad($mutasi['cdesa_masuk'], 4, '0', STR_PAD_LEFT) : ' dari C No '.str_pad($mutasi['cdesa_keluar'], 4, '0', STR_PAD_LEFT);
 			$hasil .= !empty($mutasi['luas']) ? ", Seluas ".number_format($mutasi['luas'])." m<sup>2</sup>, " : null;
 			$hasil .= !empty($mutasi['tanggal_mutasi']) ? tgl_indo_out($mutasi['tanggal_mutasi'])."<br />" : null;
 			$hasil .= !empty($mutasi['keterangan']) ? $mutasi['keterangan']: null;
