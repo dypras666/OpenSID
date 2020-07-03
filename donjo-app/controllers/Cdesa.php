@@ -45,7 +45,7 @@ class Cdesa extends Admin_Controller {
 	public function index($page=1, $o=0)
 	{
 		$this->tab_ini = 12;
-		$header['minsidebar'] = 1;
+		$this->header['minsidebar'] = 1;
 
 		$data['cari'] = isset($_SESSION['cari']) ? $_SESSION['cari'] : '';
 		$_SESSION['per_page'] = $_POST['per_page'] ?: null;
@@ -61,7 +61,7 @@ class Cdesa extends Admin_Controller {
 		$data["persil_jenis"] = $this->data_persil_model->list_persil_jenis();
 		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
 
-		$this->load->view('header', $header);
+		$this->load->view('header', $this->header);
 		$this->load->view('nav', $nav);
 		$this->load->view('data_persil/c_desa', $data);
 		$this->load->view('footer');
@@ -75,11 +75,12 @@ class Cdesa extends Admin_Controller {
 
 	public function rincian($id)
 	{
+		$this->tab_ini = 13;
 		$data = array();
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id);
 		$data['persil'] = $this->cdesa_model->get_list_persil($id);
-		$this->load->view('header', $header);
+		$this->load->view('header', $this->header);
 		$this->load->view('nav',$nav);
 		$this->load->view('data_persil/rincian', $data);
 		$this->load->view('footer');

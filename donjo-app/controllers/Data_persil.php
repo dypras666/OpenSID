@@ -44,7 +44,7 @@ class Data_persil extends Admin_Controller {
 
 	public function index($page=1, $o=0)
 	{
-		$header['minsidebar'] = 1;
+		$this->header['minsidebar'] = 1;
 		$this->tab_ini = 13;
 
 		$data['cari'] = isset($_SESSION['cari']) ? $_SESSION['cari'] : '';
@@ -59,7 +59,7 @@ class Data_persil extends Admin_Controller {
 		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
 		$data['keyword'] = $this->data_persil_model->autocomplete();
 
-		$this->load->view('header', $header);
+		$this->load->view('header', $this->header);
 		$this->load->view('nav', $nav);
 		$this->load->view('data_persil/persil', $data);
 		$this->load->view('footer');
@@ -123,12 +123,11 @@ class Data_persil extends Admin_Controller {
 
 	public function rincian($id=0)
 	{
-		$header = $this->header_model->get_data();
 		$this->tab_ini = 13;
-
+		$data = [];
 		$data['persil'] = $this->data_persil_model->get_persil($id);
 		$data['bidang'] = $this->data_persil_model->get_list_bidang($id);
-		$this->load->view('header', $header);
+		$this->load->view('header', $this->header);
 		$this->load->view('nav',$nav);
 		$this->load->view('data_persil/rincian_persil', $data);
 		$this->load->view('footer');
