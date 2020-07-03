@@ -75,7 +75,6 @@ class Cdesa extends Admin_Controller {
 
 	public function rincian($id)
 	{
-		$header = $this->header_model->get_data();
 		$data = array();
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id);
