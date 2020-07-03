@@ -3,6 +3,10 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Data_persil extends Admin_Controller {
 
+	private $header;
+	private $set_page;
+	private $list_session;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -14,12 +18,15 @@ class Data_persil extends Admin_Controller {
 		$this->load->model('penduduk_model');
 		$this->controller = 'data_persil';
 		$this->modul_ini = 7;
+		$this->set_page = ['20', '50', '100'];
+		$this->header = $this->header_model->get_data();
+		$this->list_session = ['cari'];
 	}
 
 	public function clear()
 	{
-		unset($_SESSION['cari']);
-		$_SESSION['per_page'] = 20;
+		$this->session->unset_userdata($this->list_session);
+		$this->session->per_page = $this->set_page[0];
 		redirect('data_persil');
 	}
 
@@ -37,7 +44,6 @@ class Data_persil extends Admin_Controller {
 
 	public function index($page=1, $o=0)
 	{
-		$header = $this->header_model->get_data();
 		$header['minsidebar'] = 1;
 		$this->tab_ini = 13;
 
@@ -45,6 +51,8 @@ class Data_persil extends Admin_Controller {
 		$_SESSION['per_page'] = $_POST['per_page'] ?: null;
 		$data['per_page'] = $_SESSION['per_page'];
 
+		$data['func'] = 'index';
+		$data['set_page'] = $this->set_page;
 		$data["desa"] = $this->config_model->get_data();
 		$data['paging']  = $this->data_persil_model->paging($page);
 		$data["persil"] = $this->data_persil_model->list_data($data['paging']->offset, $data['paging']->per_page);
