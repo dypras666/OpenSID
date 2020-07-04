@@ -329,24 +329,21 @@ class Cdesa_model extends CI_Model {
 
 	public function get_list_persil($id_cdesa)
 	{
-		$nomor_cdesa = $this->db->select('nomor')
-			->where('id', $id_cdesa)
-			->get('cdesa')
-			->row()->nomor;
 		$this->db
 			->select('p.*, rk.kode as kelas_tanah')
 			->select('COUNT(m.id) as jml_mutasi')
 			->select('CONCAT("RT ", rt, " / RW ", rw, " - ", dusun) as lokasi, p.lokasi as alamat')
-			->from('mutasi_cdesa m')
-			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
-			->join('persil p', 'p.id = m.id_persil', 'left')
+			->from('persil p')
+			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
 			->group_start()
 				->where('m.id_cdesa_masuk', $id_cdesa)
 				->or_where('m.cdesa_keluar', $id_cdesa)
+				->or_where('p.cdesa_awal', $id_cdesa)
 			->group_end()
-			->group_by('p.id');
+			->group_by('p.id')
+			->order_by('cast(p.nomor as unsigned)');
 		$data = $this->db->get()->result_array();
 		return $data;
 	}
