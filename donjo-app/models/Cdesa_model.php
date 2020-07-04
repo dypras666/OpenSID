@@ -400,7 +400,7 @@ class Cdesa_model extends CI_Model {
 	public function get_cetak_bidang($id_cdesa, $tipe='')
 	{
 		$this->db
-			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.nomor as nopersil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
+			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.nomor as nopersil, p.cdesa_awal, p.luas_persil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
 			->from('mutasi_cdesa m')
 			->join('persil p', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
@@ -414,30 +414,43 @@ class Cdesa_model extends CI_Model {
 			->where('rk.tipe', $tipe)
 			->order_by('p.nomor, m.tanggal_mutasi');
 		$data = $this->db->get()->result_array();
+		$persil_ini = 0;
 		foreach ($data as $key => $mutasi)
 		{
-			$data[$key]['mutasi'] = $this->format_mutasi($id_cdesa, $mutasi);
+			if ($persil_ini <> $mutasi['id_persil'] and $id_cdesa == $mutasi['cdesa_awal'])
+			{
+				// Cek kalau memiliki keseluruhan persil sekali saja untuk setiap persil
+				// Data terurut berdasarkan persil
+				$data[$key]['luas'] = $data[$key]['luas_persil'];
+				$data[$key]['mutasi'] = '<p>Memiliki keseluruhan persil sejak awal</p>';
+			}
+			else
+			{
+				if ($persil_ini == $mutasi['id_persil'])
+				{
+					// Tidak ulangi info persil
+					$data[$key]['nopersil'] = '';
+					$data[$key]['kelas_tanah'] = '';
+				}
+				$data[$key]['mutasi'] = $this->format_mutasi($id_cdesa, $mutasi);
+			}
+			if ($persil_ini <> $mutasi['id_persil']) $persil_ini = $mutasi['id_persil'];
 		}
 		return $data;
 	}
 
-	private function format_mutasi($id_cdesa, $mutasi)
+	private function format_mutasi($id_cdesa, $mutasi, $cek_cdesa_awal = false)
 	{
-		if ($mutasi)
-		{
-			$keluar = $mutasi['id_cdesa_keluar'] == $id_cdesa;
-			$div = $keluar ? 'class="out"' : null;
-			$hasil = "<p $div>";
-			$hasil .= $mutasi['sebabmutasi'];
-			$hasil .= $keluar ? ' ke C No '.str_pad($mutasi['cdesa_masuk'], 4, '0', STR_PAD_LEFT) : ' dari C No '.str_pad($mutasi['cdesa_keluar'], 4, '0', STR_PAD_LEFT);
-			$hasil .= !empty($mutasi['luas']) ? ", Seluas ".number_format($mutasi['luas'])." m<sup>2</sup>, " : null;
-			$hasil .= !empty($mutasi['tanggal_mutasi']) ? tgl_indo_out($mutasi['tanggal_mutasi'])."<br />" : null;
-			$hasil .= !empty($mutasi['keterangan']) ? $mutasi['keterangan']: null;
-			$hasil .= "</p>";
-
-			return $hasil;
-
-		}
+		$keluar = $mutasi['id_cdesa_keluar'] == $id_cdesa;
+		$div = $keluar ? 'class="out"' : null;
+		$hasil = "<p $div>";
+		$hasil .= $mutasi['sebabmutasi'];
+		$hasil .= $keluar ? ' ke C No '.str_pad($mutasi['cdesa_masuk'], 4, '0', STR_PAD_LEFT) : ' dari C No '.str_pad($mutasi['cdesa_keluar'], 4, '0', STR_PAD_LEFT);
+		$hasil .= !empty($mutasi['luas']) ? ", Seluas ".number_format($mutasi['luas'])." m<sup>2</sup>, " : null;
+		$hasil .= !empty($mutasi['tanggal_mutasi']) ? tgl_indo_out($mutasi['tanggal_mutasi'])."<br />" : null;
+		$hasil .= !empty($mutasi['keterangan']) ? $mutasi['keterangan']: null;
+		$hasil .= "</p>";
+		return $hasil;
 	}
 
 }
