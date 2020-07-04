@@ -59,6 +59,7 @@ class Data_persil_model extends CI_Model {
 			->join('ref_persil_kelas k', 'k.id = p.kelas')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah')
 			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
+			->join('cdesa c', 'c.id = p.cdesa_awal', 'left')
 			->group_by('p.nomor');
 		$this->search_sql();
 	}
@@ -66,7 +67,7 @@ class Data_persil_model extends CI_Model {
 	public function list_data($offset, $per_page)
 	{
 		$this->main_sql();
-		$data = $this->db->select('p.*, k.kode, count(m.id_persil) as jml_bidang')
+		$data = $this->db->select('p.*, k.kode, count(m.id_persil) as jml_bidang, c.nomor as nomor_cdesa_awal')
 			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
 			->get()
 			->result_array();
@@ -130,11 +131,12 @@ class Data_persil_model extends CI_Model {
 
 	public function get_persil($id)
 	{
-		$data = $this->db->select('p.*, k.kode, k.tipe, k.ndesc')
+		$data = $this->db->select('p.*, k.kode, k.tipe, k.ndesc, c.nomor as nomor_cdesa_awal')
 			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
 			->from('persil p')
 			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
+			->join('cdesa c', 'c.id = p.cdesa_awal', 'left')
 			->where('p.id', $id)
 			->get()->row_array();
 		return $data;

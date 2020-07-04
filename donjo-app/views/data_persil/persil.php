@@ -76,6 +76,7 @@
 																	<th>Kelas Tanah</th>
 																	<th>Luas Keseluruhan (M2)</th>
 																	<th>Lokasi</th>
+																	<th>C-Desa pemilik awal</th>
 																	<th>Jumlah Mutasi</th>
 																</tr>
 															</thead>
@@ -100,6 +101,7 @@
 																			<td><?= $persil_kelas[$item["kelas"]]['kode']?></td>
 																			<td><?= $item['luas_persil']?></td>
 																			<td><?= $item['alamat'] ?: $item['lokasi']?></td>
+																			<td><a href="<?= site_url("cdesa/mutasi/$item[cdesa_awal]/$item[id]")?>"><?= $item['nomor_cdesa_awal']?></a></td>
 																			<td><?= $item['jml_bidang']?></td>
 																		</tr>
 																	<?php endforeach; ?>

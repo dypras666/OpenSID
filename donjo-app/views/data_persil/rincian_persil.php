@@ -70,6 +70,12 @@
 																<td nowrap>Alamat</td>
 																<td> :  <?= $persil["alamat"] ?: $persil["lokasi"]?></td>
 															</tr>
+															<?php if ($persil['cdesa_awal']): ?>
+																<tr>
+																	<td nowrap>C-Desa Pemilik Awal</td>
+																	<td> :  <a href="<?= site_url("cdesa/mutasi/$persil[cdesa_awal]/$persil[id]")?>"><?= $persil["nomor_cdesa_awal"]?></a></td>
+																</tr>
+															<?php endif; ?>
 														</tbody>
 													</table>
 												</div>

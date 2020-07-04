@@ -121,7 +121,7 @@
 											<?php if ($persil['cdesa_awal'] == $cdesa['id']): ?>
 												<div class="box-body">
 													<span style="padding-right: 10px;">C-Desa ini adalah pemilik awal keseluruhan persil <?= $persil["nomor"] ?>. Kalau bukan, klik tombol berikut. </span>
-													<a href="<?= site_url('cdesa/awal_persil/'.$cdesa['id'].'/' .$persil['id'].'/1')?>" class="btn btn-social btn-flat btn-danger btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Kembali Ke Rincian C-Desa"><i class="fa fa-step-backward"></i>Bukan C-Desa Awal</a>
+													<a href="<?= site_url('cdesa/awal_persil/'.$cdesa['id'].'/' .$persil['id'].'/1')?>" class="btn btn-social btn-flat btn-danger btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Bukan C-Desa Awal"><i class="fa fa-step-backward"></i>Bukan C-Desa Awal</a>
 												</div>
 											<?php endif; ?>
 										</div>

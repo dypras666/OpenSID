@@ -82,7 +82,7 @@
 																<td> : <?= sprintf("%04s", $cdesa['nomor'])?></td>
 															</tr>
 															<tr>
-																<th class="horizontal">Nama Kepemilikan</td>
+																<th class="horizontal">Nama Pemilik Tertulis di C-Desa</td>
 																<td> : <?= $cdesa["nama_kepemilikan"]?></td>
 															</tr>
 														</tbody>
@@ -125,10 +125,17 @@
 															<?php foreach ($persil as $key => $item): $nomer++;?>
 																<tr>
 																	<td class="text-center padat"><?= $nomer?></td>
-																	<td nowrap class="text-center padat">
+																	<td nowrap class="padat">
 																		<a href='<?= site_url("cdesa/mutasi/$cdesa[id]/$item[id]")?>' class="btn bg-purple btn-flat btn-sm"  title="Mutasi"><i class="fa fa-bars"></i></a>
 																	</td>
-																	<td><a href="<?= site_url("data_persil/rincian/".$item["id"])?>"><?= $item['nomor']?></a></td>
+																	<td>
+																		<a href="<?= site_url("data_persil/rincian/".$item["id"])?>">
+																			<?= $item['nomor']?>
+																			<?php if ($cdesa['id'] == $item['cdesa_awal']): ?>
+																				<code>( Pemilik awal )</code>
+																			<?php endif; ?>
+																		</a>
+																	</td>
 																	<td><?= $item['kelas_tanah']?></td>
 																	<td><?= $item['alamat'] ?: $item['lokasi']?></td>
 																	<td><?= $item['luas_persil']?></td>
