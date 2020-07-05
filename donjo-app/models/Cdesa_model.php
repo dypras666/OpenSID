@@ -397,9 +397,9 @@ class Cdesa_model extends CI_Model {
 	public function get_cetak_bidang($id_cdesa, $tipe='')
 	{
 		$this->db
-			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.nomor as nopersil, p.cdesa_awal, p.luas_persil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
-			->from('mutasi_cdesa m')
-			->join('persil p', 'p.id = m.id_persil', 'left')
+			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.id as id_persil, p.nomor as nopersil, p.cdesa_awal, p.luas_persil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
+			->from('persil p')
+			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
 			->join('ref_persil_mutasi rm', 'm.jenis_mutasi = rm.id', 'left')
 			->join('cdesa cm', 'cm.id = m.id_cdesa_masuk', 'left')
@@ -407,10 +407,12 @@ class Cdesa_model extends CI_Model {
 			->group_start()
 				->where('m.id_cdesa_masuk', $id_cdesa)
 				->or_where('m.cdesa_keluar', $id_cdesa)
+				->or_where('p.cdesa_awal', $id_cdesa)
 			->group_end()
 			->where('rk.tipe', $tipe)
 			->order_by('p.nomor, m.tanggal_mutasi');
 		$data = $this->db->get()->result_array();
+
 		$persil_ini = 0;
 		foreach ($data as $key => $mutasi)
 		{

@@ -67,18 +67,18 @@
 						<tbody>
 							<?php for ($i=0; $i < 16; $i++): ?>
 								<tr>
-									<td class="row" ><?= ($basah[$i]["id"] != $basah[$i-1]["id"]) ? $basah[$i]["nopersil"] : null ?></td>
-									<td class="row" ><?= ($basah[$i]["id"] != $basah[$i-1]["id"]) ? $basah[$i]["kelas_tanah"] : null  ?></td>
-									<td class="row" ><?= ($basah[$i]["id"] != $basah[$i-1]["id"]) ? luas($basah[$i]["luas"], "ha") : null  ?></td>
-									<td class="row" ><?= ($basah[$i]["id"] != $basah[$i-1]["id"]) ? luas($basah[$i]["luas"], "meter") : null  ?></td>
-									<td class="row" ><?= ($basah[$i]["id"] != $basah[$i-1]["id"]) ? $basah[$i]["pajak"] : null  ?></td>
+									<td class="row" ><?= $basah[$i]["nopersil"]?></td>
+									<td class="row" ><?= $basah[$i]["kelas_tanah"]?></td>
+									<td class="row" ><?= luas($basah[$i]["luas"], "ha")?></td>
+									<td class="row" ><?= luas($basah[$i]["luas"], "meter")?></td>
+									<td class="row" ><?= $basah[$i]["pajak"]?></td>
 									<td class="row batas"><?= $basah[$i]['mutasi']?></td>
 
-									<td class="row" ><?= ($kering[$i]["id"] != $kering[$i-1]["id"]) ? $kering[$i]["nopersil"] : null ?></td>
-									<td class="row" ><?= ($kering[$i]["id"] != $kering[$i-1]["id"]) ? $kering[$i]["kelas_tanah"] :null ?></td>
-									<td class="row" ><?= ($kering[$i]["id"] != $kering[$i-1]["id"]) ? luas($kering[$i]["luas"], "ha") : null?></td>
-									<td class="row" ><?= ($kering[$i]["id"] != $kering[$i-1]["id"]) ? luas($kering[$i]["luas"], "meter") :null ?></td>
-									<td class="row" ><?= ($kering[$i]["id"] != $kering[$i-1]["id"]) ? $kering[$i]["pajak"]  :null ?></td>
+									<td class="row" ><?= $kering[$i]["nopersil"]?></td>
+									<td class="row" ><?= $kering[$i]["kelas_tanah"]?></td>
+									<td class="row" ><?= luas($kering[$i]["luas"], "ha")?></td>
+									<td class="row" ><?= luas($kering[$i]["luas"], "meter")?></td>
+									<td class="row" ><?= $kering[$i]["pajak"]?></td>
 									<td class="row"><?= $kering[$i]['mutasi']?></td>
 								</tr>
 							<?php endfor; ?>
