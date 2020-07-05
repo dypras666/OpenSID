@@ -33,7 +33,7 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label">Nama Pemilik</label>
 											<div class="col-sm-8">
-												<input  class="form-control input-sm" type="text" placeholder="Nama Pemilik" value="<?= $pemilik["nama"] ?>" disabled >
+												<input  class="form-control input-sm" type="text" placeholder="Nama Pemilik" value="<?= $pemilik["namapemilik"] ?>" disabled >
 											</div>
 										</div>
 										<div class="form-group">
@@ -45,7 +45,7 @@
 										<div class="form-group">
 											<label for="alamat"  class="col-sm-3 control-label">Alamat Pemilik</label>
 											<div class="col-sm-8">
-												<textarea  class="form-control input-sm" placeholder="Alamat Pemilik" disabled><?= "RT ".$pemilik["rt"]." / RT ".$pemilik["rw"]." - ".strtoupper($pemilik["dusun"]) ?></textarea>
+												<textarea  class="form-control input-sm" placeholder="Alamat Pemilik" disabled><?= $pemilik["alamat"] ?></textarea>
 											</div>
 										</div>
 									<?php endif; ?>
