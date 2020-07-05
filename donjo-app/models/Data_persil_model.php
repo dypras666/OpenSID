@@ -60,7 +60,7 @@ class Data_persil_model extends CI_Model {
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah')
 			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
 			->join('cdesa c', 'c.id = p.cdesa_awal', 'left')
-			->group_by('p.nomor');
+			->group_by('p.nomor, nomor_urut_bidang');
 		$this->search_sql();
 	}
 
@@ -69,6 +69,7 @@ class Data_persil_model extends CI_Model {
 		$this->main_sql();
 		$data = $this->db->select('p.*, k.kode, count(m.id_persil) as jml_bidang, c.nomor as nomor_cdesa_awal')
 			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
+			->order_by('nomor, nomor_urut_bidang')
 			->get()
 			->result_array();
 
@@ -85,10 +86,11 @@ class Data_persil_model extends CI_Model {
 	public function list_persil()
 	{
 		$data = $this->db
-			->select('p.id, nomor')
+			->select('p.id, nomor, nomor_urut_bidang')
 			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as lokasi')
 			->from('persil p')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah')
+			->order_by('nomor, nomor_urut_bidang')
 			->get()->result_array();
 		return $data;
 	}
@@ -182,10 +184,11 @@ class Data_persil_model extends CI_Model {
 		return $data;
 	}
 
- 	private function get_persil_by_nomor($nomor)
+ 	private function get_persil_by_nomor($nomor, $nomor_urut_bidang)
  	{
  		$id = $this->db->select('id')
  			->where('nomor', $nomor)
+ 			->where('nomor_urut_bidang', $nomor_urut_bidang)
  			->get('persil')->row()->id;
  		return $id;
  	}
@@ -194,11 +197,12 @@ class Data_persil_model extends CI_Model {
 	{
 		$data = array();
 		$data['nomor'] = $post['no_persil'];
+		$data['nomor_urut_bidang'] = $post['nomor_urut_bidang'];
 		$data['kelas'] = $post['kelas'];
 		$data['id_wilayah'] = $post['id_wilayah'] ?: NULL;
 		$data['luas_persil'] = bilangan($post['luas_persil']) ?: NULL;
 		$data['lokasi'] = $post['lokasi'] ?: NULL;
-		$id_persil = $post['id_persil'] ?: $this->get_persil_by_nomor($post['no_persil']);
+		$id_persil = $post['id_persil'] ?: $this->get_persil_by_nomor($post['no_persil'], $post['nomor_urut_bidang']);
 		if ($id_persil)
 		{
 			$this->db->where('id', $id_persil)

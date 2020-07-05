@@ -113,7 +113,7 @@
 															<tr>
 																<th>No</th>
 																<th>Aksi</th>
-																<th>No. Persil</th>
+																<th>No. Persil : No. Urut Bidang</th>
 																<th>Kelas Tanah</th>
 																<th>Lokasi</th>
 																<th>Luas Keseluruhan Persil (M2)</th>
@@ -130,7 +130,7 @@
 																	</td>
 																	<td>
 																		<a href="<?= site_url("data_persil/rincian/".$item["id"])?>">
-																			<?= $item['nomor']?>
+																			<?= $item['nomor'].' : '.$item['nomor_urut_bidang']?>
 																			<?php if ($cdesa['id'] == $item['cdesa_awal']): ?>
 																				<code>( Pemilik awal )</code>
 																			<?php endif; ?>

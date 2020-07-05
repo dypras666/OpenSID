@@ -100,8 +100,8 @@
 												<table class="table table-bordered table-striped table-hover" >
 													<tbody>
 														<tr>
-															<th class="horizontal">Nomor Persil</td>
-															<td> : <?= $persil['nomor']?></td>
+															<th class="horizontal">No. Persil : No. Urut Bidang</td>
+															<td> : <?= $persil['nomor'].' : '.$persil['nomor_urut_bidang']?></td>
 														</tr>
 														<tr>
 															<th class="horizontal">Kelas Tanah</td>
@@ -150,7 +150,7 @@
 														<tr>
 															<th class="padat">No</th>
 															<th class="padat">Aksi</th>
-															<th>No. Bidang Persil</th>
+															<th>No. Bidang Mutasi</th>
 															<th>Luas Masuk (M2)</th>
 															<th>Luas Keluar (M2)</th>
 															<th>NOP</th>

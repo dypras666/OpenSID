@@ -25,9 +25,15 @@
 									<div class="box-body">
 										<input type="hidden" name="id_persil" value="<?= $persil['id']?>">
 										<div class="form-group">
-											<label for="no_persil" class="col-sm-3 control-label">Nomor Persil</label>
+											<label for="no_persil" class="col-sm-3 control-label">No. Persil</label>
 											<div class="col-sm-8">
 												<input name="no_persil" class="form-control input-sm angka required" type="text" placeholder="Nomor Surat Persil" name="nama" value="<?= $persil["nomor"] ?>">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="no_persil" class="col-sm-3 control-label">No. Urut Bidang</label>
+											<div class="col-sm-8">
+												<input name="nomor_urut_bidang" class="form-control input-sm angka required" type="text" placeholder="Nomor urut untuk bidang tanah dengan nomor persil sama" value="<?= $persil["nomor_urut_bidang"] ?>">
 											</div>
 										</div>
 										<div class="form-group">

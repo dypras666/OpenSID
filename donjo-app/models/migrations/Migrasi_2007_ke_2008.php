@@ -262,8 +262,12 @@ class Migrasi_2007_ke_2008 extends CI_model {
 				),
 				'nomor' => array(
 					'type' => 'VARCHAR',
-					'constraint' => 20,
-					'unique' => TRUE,
+					'constraint' => 20
+				),
+				'nomor_urut_bidang' => array(
+					'type' => 'TINYINT',
+					'constraint' => 3,
+					'default' => 1
 				),
 				'kelas' => array(
 					'type' => 'INT',
@@ -295,6 +299,7 @@ class Migrasi_2007_ke_2008 extends CI_model {
 				)
 			);
 			$this->dbforge->add_key('id', TRUE);
+			$this->dbforge->add_key(['nomor', 'nomor_urut_bidang']);
 			$this->dbforge->add_field($fields);
 			$this->dbforge->create_table('persil');
 		}

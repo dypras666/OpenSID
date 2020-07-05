@@ -59,20 +59,20 @@
 													<table class="table table-bordered  table-striped table-hover" >
 														<tbody>
 															<tr>
-																<td nowrap>Nomor Persil</td>
-																<td> : <?= $persil['nomor']?></td>
+																<th>No. Persil : No. Urut Bidang</td>
+																<td> : <?= $persil['nomor'].' : '.$persil['nomor_urut_bidang']?></td>
 															</tr>
 															<tr>
-																<td nowrap>Kelas Tanah</td>
+																<th>Kelas Tanah</td>
 																<td> :  <?= $persil["kode"].' - '.$persil["ndesc"]?></td>
 															</tr>
 															<tr>
-																<td nowrap>Alamat</td>
+																<th>Alamat</td>
 																<td> :  <?= $persil["alamat"] ?: $persil["lokasi"]?></td>
 															</tr>
 															<?php if ($persil['cdesa_awal']): ?>
 																<tr>
-																	<td nowrap>C-Desa Pemilik Awal</td>
+																	<td>C-Desa Pemilik Awal</td>
 																	<td> :  <a href="<?= site_url("cdesa/mutasi/$persil[cdesa_awal]/$persil[id]")?>"><?= $persil["nomor_cdesa_awal"]?></a></td>
 																</tr>
 															<?php endif; ?>
@@ -105,7 +105,7 @@
 																<th>No</th>
 																<th>C-Desa Masuk</th>
 																<th>C-Desa Keluar</th>
-																<th>No. Bidang Persil</th>
+																<th>No. Bidang Mutasi</th>
 																<th>Luas (M2)</th>
 																<th>NOP</th>
 																<th>No. SPPT PBB</th>

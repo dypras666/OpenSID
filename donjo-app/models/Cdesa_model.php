@@ -343,7 +343,7 @@ class Cdesa_model extends CI_Model {
 				->or_where('p.cdesa_awal', $id_cdesa)
 			->group_end()
 			->group_by('p.id')
-			->order_by('cast(p.nomor as unsigned)');
+			->order_by('cast(p.nomor as unsigned), nomor_urut_bidang');
 		$data = $this->db->get()->result_array();
 		return $data;
 	}
@@ -397,7 +397,7 @@ class Cdesa_model extends CI_Model {
 	public function get_cetak_bidang($id_cdesa, $tipe='')
 	{
 		$this->db
-			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.id as id_persil, p.nomor as nopersil, p.cdesa_awal, p.luas_persil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
+			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.id as id_persil, p.nomor as nopersil, p.nomor_urut_bidang, p.cdesa_awal, p.luas_persil, cm.nomor as cdesa_masuk, ck.nomor as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
 			->from('persil p')
 			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
 			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
@@ -410,7 +410,7 @@ class Cdesa_model extends CI_Model {
 				->or_where('p.cdesa_awal', $id_cdesa)
 			->group_end()
 			->where('rk.tipe', $tipe)
-			->order_by('p.nomor, m.tanggal_mutasi');
+			->order_by('p.nomor, p.nomor_urut_bidang, m.tanggal_mutasi');
 		$data = $this->db->get()->result_array();
 
 		$persil_ini = 0;

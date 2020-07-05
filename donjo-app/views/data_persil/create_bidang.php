@@ -83,7 +83,7 @@
 														<select class="form-control select2 input-sm" name="id_persil"  onchange="formAction('main')" style="width:100%" >
 															<option value='' selected="selected">-- Pilih Nomor Persil --</option>
 															<?php foreach ($list_persil as $data): ?>
-																<option value="<?= $data['id']?>" <?php selected($persil['id'], $data['id']); ?>> <?= $data['nomor']." - ".$data['lokasi']?></option>
+																<option value="<?= $data['id']?>" <?php selected($persil['id'], $data['id']); ?>> <?= $data['nomor']." : ".$data['nomor_urut_bidang']." - ".$data['lokasi']?></option>
 															<?php endforeach;?>
 														</select>
 													</div>
@@ -99,9 +99,9 @@
 													</div>
 												<?php else: ?>
 													<div class="form-group">
-														<label for="no_persil" class="col-sm-3 control-label">Nomor Persil</label>
+														<label for="no_persil" class="col-sm-3 control-label">Nomor Persil : Nomor Urut Bidang</label>
 														<div class="col-sm-8">
-															<input name="no_persil" class="form-control input-sm angka required" type="text" disabled value="<?= $persil["nomor"] ?>">
+															<input name="no_persil" class="form-control input-sm angka required" type="text" disabled value="<?= $persil["nomor"].' : '.$persil['nomor_urut_bidang'] ?>">
 														</div>
 													</div>
 													<div class="form-group">
@@ -169,9 +169,9 @@
 											<div id="bidang_persil" class="panel-collapse">
 												<div class="box-body">
 													<div class="form-group">
-														<label for="no_bidang_persil" class="col-sm-3 control-label">Nomor Bidang Persil</label>
+														<label for="no_bidang_persil" class="col-sm-3 control-label">Nomor Bidang Mutasi</label>
 														<div class="col-sm-4">
-															<input name="no_bidang_persil" type="text" class="form-control input-sm digits" placeholder="Nomor Bidang Persil" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
+															<input name="no_bidang_persil" type="text" class="form-control input-sm digits" placeholder="Nomor Bidang Mutasi" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
 														</div>
 													</div>
 													<div class="form-group">

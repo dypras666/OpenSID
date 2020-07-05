@@ -72,12 +72,12 @@
 																<tr>
 																	<th>No</th>
 																	<th>Aksi</th>
-																	<th>Nomor Persil</th>
+																	<th>No. Persil : No. Urut Bidang</th>
 																	<th>Kelas Tanah</th>
-																	<th>Luas Keseluruhan (M2)</th>
+																	<th>Luas (M2)</th>
 																	<th>Lokasi</th>
-																	<th>C-Desa pemilik awal</th>
-																	<th>Jumlah Mutasi</th>
+																	<th>C-Desa Awal</th>
+																	<th>Jml Mutasi</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -97,7 +97,7 @@
 																				<a class="btn bg-maroon btn-flat btn-sm" disabled><i class="fa fa-trash-o"></i></a>
 																			<?php endif ?>
 																			</td>
-																			<td><?= $item['nomor']?></td>
+																			<td><?= $item['nomor'].' : '.$item['nomor_urut_bidang']?></td>
 																			<td><?= $persil_kelas[$item["kelas"]]['kode']?></td>
 																			<td><?= $item['luas_persil']?></td>
 																			<td><?= $item['alamat'] ?: $item['lokasi']?></td>
