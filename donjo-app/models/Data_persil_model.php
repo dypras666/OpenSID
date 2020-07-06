@@ -57,7 +57,7 @@ class Data_persil_model extends CI_Model {
 	{
 		$this->db->from('persil p')
 			->join('ref_persil_kelas k', 'k.id = p.kelas')
-			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah')
+			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')
 			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
 			->join('cdesa c', 'c.id = p.cdesa_awal', 'left')
 			->group_by('p.nomor, nomor_urut_bidang');
@@ -68,7 +68,7 @@ class Data_persil_model extends CI_Model {
 	{
 		$this->main_sql();
 		$data = $this->db->select('p.*, k.kode, count(m.id_persil) as jml_bidang, c.nomor as nomor_cdesa_awal')
-			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
+			->select('(CASE WHEN c.jenis_pemilik = 1 THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE c.alamat_pemilik_luar END) AS alamat')
 			->order_by('nomor, nomor_urut_bidang')
 			->get()
 			->result_array();
