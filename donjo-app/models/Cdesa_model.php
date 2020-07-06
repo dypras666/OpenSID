@@ -73,8 +73,9 @@ class Cdesa_model extends CI_Model {
 		return $this->paging;
 	}
 
-	public function list_c_desa($offset=0, $per_page='')
+	public function list_c_desa($offset=0, $per_page='', $kecuali=[])
 	{
+		$kecuali = sql_in_list($kecuali);
 		$data = [];
 		$this->main_sql_c_desa();
 		$this->db
@@ -85,6 +86,7 @@ class Cdesa_model extends CI_Model {
 			->select('COUNT(m.id) AS jumlah')
 			->group_by('c.id, cu.id');
 		if ($per_page) $this->db->limit($per_page, $offset);
+  	if ($kecuali)	$this->db->where("c.id not in ($kecuali)");
 		$data = $this->db
 			->get()
 			->result_array();

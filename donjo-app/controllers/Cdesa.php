@@ -240,7 +240,7 @@ class Cdesa extends Admin_Controller {
 			$data["bidang"] = $this->cdesa_model->get_bidang($id_bidang);
 		}
 		$data['cdesa'] = $this->cdesa_model->get_cdesa($id_cdesa);
-		$data['list_cdesa'] = $this->cdesa_model->list_c_desa(0, 10000);
+		$data['list_cdesa'] = $this->cdesa_model->list_c_desa(0, 0, [$id_cdesa]);
 		$data['pemilik'] = $this->cdesa_model->get_pemilik($id_cdesa);
 
 		$data['list_persil'] = $this->data_persil_model->list_persil();
