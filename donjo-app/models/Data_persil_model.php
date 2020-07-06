@@ -196,12 +196,13 @@ class Data_persil_model extends CI_Model {
 	public function simpan_persil($post)
 	{
 		$data = array();
-		$data['nomor'] = $post['no_persil'];
-		$data['nomor_urut_bidang'] = $post['nomor_urut_bidang'];
+		$data['nomor'] = bilangan($post['no_persil']);
+		$data['nomor_urut_bidang'] = bilangan($post['nomor_urut_bidang']);
 		$data['kelas'] = $post['kelas'];
 		$data['id_wilayah'] = $post['id_wilayah'] ?: NULL;
 		$data['luas_persil'] = bilangan($post['luas_persil']) ?: NULL;
 		$data['lokasi'] = $post['lokasi'] ?: NULL;
+		$data['cdesa_awal'] = bilangan($post['cdesa_awal']);
 		$id_persil = $post['id_persil'] ?: $this->get_persil_by_nomor($post['no_persil'], $post['nomor_urut_bidang']);
 		if ($id_persil)
 		{

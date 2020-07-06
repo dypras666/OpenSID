@@ -140,6 +140,7 @@ class Data_persil extends Admin_Controller {
 		$this->tab_ini = 13;
 
 		if ($id) $data["persil"] = $this->data_persil_model->get_persil($id);
+		$data['list_cdesa'] = $this->cdesa_model->list_c_desa();
 		$data["persil_lokasi"] = $this->data_persil_model->list_dusunrwrt();
 		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
 		$this->load->view('header', $header);
@@ -158,16 +159,18 @@ class Data_persil extends Admin_Controller {
 
 		if ($this->form_validation->run() != false)
 		{
-			$this->data_persil_model->simpan_persil($this->input->post());
-			redirect("data_persil");
+			$id_persil = $this->data_persil_model->simpan_persil($this->input->post());
+			$cdesa_awal = $this->input->post('cdesa_awal');
+			if (!$this->input->post('id_persil') and $cdesa_awal)
+				redirect("cdesa/mutasi/$cdesa_awal/$id_persil");
+			else
+				redirect("data_persil");
 		}
-		else
-		{
-			$_SESSION["success"] = -1;
-			$_SESSION["error_msg"] = trim(strip_tags(validation_errors()));
-			$id	= $this->input->post('id_persil');
-			redirect("data_persil/form/".$id);
-		}
+
+		$_SESSION["success"] = -1;
+		$_SESSION["error_msg"] = trim(strip_tags(validation_errors()));
+		$id	= $this->input->post('id_persil');
+		redirect("data_persil/form/".$id);
 	}
 
 	public function persil_jenis($id=0)
