@@ -98,7 +98,7 @@
 												<select class="form-control input-sm required" id="kelas" name="cdesa_awal" type="text" placeholder="C-Desa pemilik awal persil ini" >
 													<option value="">-- Pilih C-Desa Pemilik Awal --</option>
 													<?php foreach ($list_cdesa  as $cdesa): ?>
-														<option value="<?= $cdesa['id_cdesa'] ?>" <?php ($cdesa['id_cdesa'] and $cdesa['id_cdesa'] == $persil["cdesa_awal"]) and print('selected'); ?>><?= $cdesa['nomor'].' - '.$cdesa['namapemilik']?></option>
+														<option value="<?= $cdesa['id_cdesa'] ?>" <?php (($id_cdesa and $id_cdesa == $cdesa["id_cdesa"]) or ($cdesa['id_cdesa'] and $cdesa['id_cdesa'] == $persil["cdesa_awal"])) and print('selected'); ?>><?= $cdesa['nomor'].' - '.$cdesa['namapemilik']?></option>
 													<?php endforeach;?>
 												</select>
 											</div>
