@@ -74,7 +74,7 @@
 									<td class="row" ><?= $basah[$i]["pajak"]?></td>
 									<td class="row batas"><?= $basah[$i]['mutasi']?></td>
 
-									<td class="row" ><?= $kering[$i]["nopersil"].' : '.$kering[$i]["nomor_urut_bidang"]?></td>
+									<td class="row" ><?= $kering[$i]["nopersil"]?></td>
 									<td class="row" ><?= $kering[$i]["kelas_tanah"]?></td>
 									<td class="row" ><?= luas($kering[$i]["luas"], "ha")?></td>
 									<td class="row" ><?= luas($kering[$i]["luas"], "meter")?></td>
