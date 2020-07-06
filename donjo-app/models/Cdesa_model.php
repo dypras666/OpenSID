@@ -407,11 +407,20 @@ class Cdesa_model extends CI_Model {
 			->group_start()
 				->where('m.id_cdesa_masuk', $id_cdesa)
 				->or_where('m.cdesa_keluar', $id_cdesa)
-				->or_where('p.cdesa_awal', $id_cdesa)
 			->group_end()
-			->where('rk.tipe', $tipe)
-			->order_by('p.nomor, p.nomor_urut_bidang, m.tanggal_mutasi');
-		$data = $this->db->get()->result_array();
+			->where('rk.tipe', $tipe);
+		$mutasi = $this->db->get_compiled_select();
+		$this->db
+			->select('m.*, m.cdesa_keluar as id_cdesa_keluar, p.id as id_persil, p.nomor as nopersil, p.nomor_urut_bidang, p.cdesa_awal, p.luas_persil, 0 as cdesa_masuk, 0 as cdesa_keluar, rk.kode as kelas_tanah, rm.nama as sebabmutasi')
+			->from('persil p')
+			->join('mutasi_cdesa m', 'p.id = m.id_persil', 'left')
+			->join('ref_persil_kelas rk', 'p.kelas = rk.id', 'left')
+			->join('ref_persil_mutasi rm', 'm.jenis_mutasi = rm.id', 'left')
+			->where('p.cdesa_awal', $id_cdesa)
+			->where('rk.tipe', $tipe);
+		$cdesa_awal = $this->db->get_compiled_select();
+		$sql = '('.$mutasi.') UNION ('.$cdesa_awal.') ORDER BY nopersil, nomor_urut_bidang, tanggal_mutasi';
+		$data = $this->db->query($sql)->result_array();
 
 		$persil_ini = 0;
 		foreach ($data as $key => $mutasi)
