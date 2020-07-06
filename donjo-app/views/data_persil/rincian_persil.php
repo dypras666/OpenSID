@@ -108,7 +108,6 @@
 																<th>No. Bidang Mutasi</th>
 																<th>Luas (M2)</th>
 																<th>NOP</th>
-																<th>No. SPPT PBB</th>
 																<th>Tanggal Mutasi</th>
 																<th>Keterangan</th>
 															</tr>
@@ -123,7 +122,6 @@
 																	<td><?= $item['no_bidang_persil']?></td>
 																	<td><?= $item['luas']?></td>
 																	<td><?= $item['no_objek_pajak']?></td>
-																	<td><?= $item['no_sppt_pbb']?></td>
 																	<td><?= tgl_indo_out($item['tanggal_mutasi'])?></td>
 																	<td><?= $item['keterangan']?></td>
 																</tr>

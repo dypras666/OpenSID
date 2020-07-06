@@ -154,7 +154,6 @@
 															<th>Luas Masuk (M2)</th>
 															<th>Luas Keluar (M2)</th>
 															<th>NOP</th>
-															<th>No. SPPT PBB</th>
 															<th>Tanggal Mutasi</th>
 															<th>Keterangan</th>
 														</tr>
@@ -180,7 +179,6 @@
 																	<?php endif; ?>
 																</td>
 																<td><?= $item['no_objek_pajak']?></td>
-																<td><?= $item['no_sppt_pbb']?></td>
 																<td><?= tgl_indo_out($item['tanggal_mutasi'])?></td>
 																<td><?= $item['keterangan']?></td>
 															</tr>

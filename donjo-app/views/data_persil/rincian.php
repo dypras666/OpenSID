@@ -126,7 +126,7 @@
 																<tr>
 																	<td class="text-center padat"><?= $nomer?></td>
 																	<td nowrap class="padat">
-																		<a href='<?= site_url("cdesa/mutasi/$cdesa[id]/$item[id]")?>' class="btn bg-purple btn-flat btn-sm"  title="Mutasi"><i class="fa fa-bars"></i></a>
+																		<a href='<?= site_url("cdesa/mutasi/$cdesa[id]/$item[id]")?>' class="btn bg-maroon btn-flat btn-sm"  title="Daftar Mutasi"><i class="fa fa-exchange"></i></a>
 																	</td>
 																	<td>
 																		<a href="<?= site_url("data_persil/rincian/".$item["id"])?>">

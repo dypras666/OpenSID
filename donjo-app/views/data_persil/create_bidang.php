@@ -175,15 +175,15 @@
 														</div>
 													</div>
 													<div class="form-group">
-														<label for="no_objek_pajak" class="col-sm-3 control-label">Nomor Objek Pajak</label>
-														<div class="col-sm-8">
-															<input class="form-control input-sm angka" type="text" placeholder="Nomor Objek Pajak" name="no_objek_pajak" value="<?= $bidang["no_objek_pajak"] ?>">
+														<label for="luas" class="col-sm-3 control-label">Luas Mutasi (M2)</label>
+														<div class="col-sm-9">
+															<input name="luas" type="text" class="form-control input-sm luas required" placeholder="Luas Mutasi (M2)" value="<?= $bidang['luas']?>">
 														</div>
 													</div>
 													<div class="form-group">
-														<label for="no_sppt_pbb" class="col-sm-3 control-label">Nomor SPPT PBB</label>
+														<label for="no_objek_pajak" class="col-sm-3 control-label">Nomor Objek Pajak</label>
 														<div class="col-sm-8">
-															<input name="no_sppt_pbb" type="text" class="form-control input-sm required" placeholder="Tuliskan Nomor SPPT PBB" value="<?= $bidang["no_sppt_pbb"] ?>">
+															<input class="form-control input-sm angka" type="text" placeholder="Nomor Objek Pajak" name="no_objek_pajak" value="<?= $bidang["no_objek_pajak"] ?>">
 														</div>
 													</div>
 												</div>
@@ -216,12 +216,6 @@
 																	<option value="<?= $item['id'] ?>" <?php selected($key, $bidang['jenis_mutasi'])?>><?= $item['nama']?></option>
 																<?php endforeach;?>
 															</select>
-														</div>
-													</div>
-													<div class="form-group">
-														<label for="luas" class="col-sm-3 control-label">Luas Mutasi (M2)</label>
-														<div class="col-sm-9">
-															<input name="luas" type="text" class="form-control input-sm luas required" placeholder="Luas Mutasi (M2)" value="<?= $bidang['luas']?>">
 														</div>
 													</div>
 													<div class="form-group">

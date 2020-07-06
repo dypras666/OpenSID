@@ -371,11 +371,6 @@ class Migrasi_2007_ke_2008 extends CI_model {
 					'constraint' => 30,
 					'null' => TRUE
 				),
-				'no_sppt_pbb' => array(
-					'type' => 'VARCHAR',
-					'constraint' => 30,
-					'null' => TRUE
-				),
 				'path' => array(
 					'type' => 'TEXT',
 					'null' => TRUE

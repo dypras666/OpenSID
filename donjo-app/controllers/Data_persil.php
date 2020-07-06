@@ -291,18 +291,6 @@ class Data_persil extends Admin_Controller {
 		$this->load->view('data_persil/c_desa_print', $data);
 	}
 
-	// Cek untuk dihapus
-	public function form_c_desa($id=0)
-	{
-		$header = $this->header_model->get_data();
-		$data['desa'] = $header['desa'];
-		$data["persil_detail"] = $this->data_persil_model->get_c_desa($id);
-		$data['basah']= $this->data_persil_model->get_c_cetak($id, 'S');
-		$data['kering']= $this->data_persil_model->get_c_cetak($id, 'D');
-		$data["persil_kelas"] = $this->data_persil_model->list_persil_kelas();
-		$this->load->view('data_persil/c_desa_form_print', $data);
-	}
-
 	public function excel($mode="", $o=0)
 	{
 		$data['mode'] = $mode;

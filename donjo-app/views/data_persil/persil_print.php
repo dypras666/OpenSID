@@ -37,7 +37,7 @@
 							<th>NIK</th>
 							<th>Nama Pemilik</th>
 							<th>Luas (m2)</th>
-							<th>Nomor SPPT PBB</th>
+							<th>Nomor Objek Pajak</th>
 							<th>Tanggal Terdaftar</th>
 						</tr>
 					</thead>
@@ -49,7 +49,7 @@
 							<td class="textx"><?= $persil['nik']?></td>
 							<td><?= $persil['namapemilik']?></td>
 							<td><?= $persil['luas']?></td>
-							<td class="textx"><?= $persil['no_sppt_pbb']?></td>
+							<td class="textx"><?= $persil['no_objek_pajak']?></td>
 							<td><?= tgl_indo($persil['tanggal_daftar'])?></td>
 						</tr>
 						<?php endforeach; ?>

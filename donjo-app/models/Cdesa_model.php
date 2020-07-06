@@ -252,7 +252,6 @@ class Cdesa_model extends CI_Model {
 		$data['no_bidang_persil'] = bilangan($post['no_bidang_persil']) ?: NULL;
 		// $data['peruntukan'] = $post['peruntukan'];
 		$data['no_objek_pajak'] = strip_tags($post['no_objek_pajak']);
-		$data['no_sppt_pbb'] = strip_tags($post['no_sppt_pbb']);
 
 		$data['tanggal_mutasi'] = $post['tanggal_mutasi'] ? tgl_indo_in($post['tanggal_mutasi']) : NULL;
 		$data['jenis_mutasi'] = $post['jenis_mutasi'] ?: NULL;

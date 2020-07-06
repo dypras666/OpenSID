@@ -34,8 +34,8 @@
 									<li>Kolom <strong>Luas Tanah</strong>
 										<p>Isikan dengan menggunakan angka saja. Bila data luasan tidak bulat, gunakan tanda titik(.) untuk menggantikan data koma pada nilai desimal. Nilai luasan dalam satuan meter persegi (m<sup>2</sup>)</p>
 									</li>
-									<li>Kolom <strong>Nomor SPPT PBB</strong>
-										<p>Isikan sesuai dengan data nomor SPPT PBB atas persil tersebut</p>
+									<li>Kolom <strong>Nomor Objek Pajak</strong>
+										<p>Isikan sesuai dengan data Nomor Objek Pajak atas persil tersebut</p>
 									</li>
 								</ol>
 							</p>
