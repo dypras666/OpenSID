@@ -151,8 +151,9 @@ class Cdesa_model extends CI_Model {
 	public function get_persil($id_bidang)
 	{
 		$data = $this->db->select('p.*, k.kode, k.tipe, k.ndesc')
-			->select('CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) as alamat')
+			->select('(CASE WHEN p.id_wilayah IS NOT NULL THEN CONCAT("RT ", w.rt, " / RW ", w.rw, " - ", w.dusun) ELSE p.lokasi END) AS alamat')
 			->from('mutasi_cdesa m')
+			->join('cdesa c', 'c.id = m.id_cdesa_masuk', 'left')
 			->join('persil p', 'm.id_persil = p.id', 'left')
 			->join('ref_persil_kelas k', 'k.id = p.kelas', 'left')
 			->join('tweb_wil_clusterdesa w', 'w.id = p.id_wilayah', 'left')

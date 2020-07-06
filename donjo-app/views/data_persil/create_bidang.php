@@ -171,7 +171,7 @@
 													<div class="form-group">
 														<label for="no_bidang_persil" class="col-sm-3 control-label">Nomor Bidang Mutasi</label>
 														<div class="col-sm-4">
-															<input name="no_bidang_persil" type="text" class="form-control input-sm digits" placeholder="Nomor Bidang Mutasi" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
+															<input name="no_bidang_persil" type="text" class="form-control input-sm digits" placeholder="Nomor urut pecahan bidang persil hasil mutasi" maxlength="2" value="<?= $bidang["no_bidang_persil"] ?>">
 														</div>
 													</div>
 													<div class="form-group">
