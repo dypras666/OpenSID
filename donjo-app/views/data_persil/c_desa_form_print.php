@@ -67,7 +67,7 @@
 						<tbody>
 							<?php for ($i=0; $i < 16; $i++): ?>
 								<tr>
-									<td class="row" ><?= $basah[$i]["nopersil"].' : '.$basah[$i]["nomor_urut_bidang"]?></td>
+									<td class="row" ><?= $basah[$i]["nopersil"]?></td>
 									<td class="row" ><?= $basah[$i]["kelas_tanah"]?></td>
 									<td class="row" ><?= luas($basah[$i]["luas"], "ha")?></td>
 									<td class="row" ><?= luas($basah[$i]["luas"], "meter")?></td>
